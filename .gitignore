@@ -1,0 +1,12 @@
+/Setup/Install/Release
+/Setup/Install/Debug
+/Service/Output
+/Service/Build
+/.vs
+/Setup/Install/setup.exe
+/Setup/Install/Grubbrr.Proxy.msi
+/Service/Grubbrr.Proxy.Service.aps
+/Plugins/Bac/Build
+/Framework/Common/Build
+/Plugins/Test/Build
+/Framework/Common/Grubbrr.Proxy.Common.aps

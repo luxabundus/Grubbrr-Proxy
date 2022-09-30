@@ -1,0 +1,47 @@
+<VSDX>
+	<Package>
+		<Component ServiceName="Grubbrr.Proxy" FileName="Grubbrr.Proxy.Service.exe" AccountName="NT Service\$(ServiceName)">
+			<Service>
+				<ServiceName>$(ServiceName)</ServiceName>
+				<DisplayName>Grubbrr Proxy Service</DisplayName>
+<!--
+				<StartName>$(AccountName)</StartName>
+-->
+				<Description></Description>
+<!--
+				<Recovery>
+					<First Action="restart"/>
+					<Second Action="restart"/>
+				</Recovery>
+-->
+			</Service>
+			<RemoveFile>
+				<Directory>[TARGETDIR]</Directory>
+				<FileName>Grubbrr.Proxy.Service.log</FileName>
+				<InstallMode>msidbRemoveFileInstallModeOnBoth</InstallMode>
+			</RemoveFile>
+			<AccessControl>
+				<Name>GrantAppFolderAccess</Name>
+				<Mode>GRANT_ACCESS</Mode>
+				<Path>[TARGETDIR]</Path>
+				<Permissions>FILE_ALL_ACCESS</Permissions>
+				<Inheritance>SUB_CONTAINERS_AND_OBJECTS_INHERIT</Inheritance>
+				<Sequence>
+					<Before>StartServices</Before>
+					<Condition>IsNotInstalled AND IsInstalling</Condition>
+				</Sequence>
+			</AccessControl>
+			<AccessControl>
+				<Name>GrantAppRegistryAccess</Name>
+				<Mode>GRANT_ACCESS</Mode>
+				<Path>HKEY_LOCAL_MACHINE\Software\Grubbrr\Proxy</Path>
+				<Permissions>KEY_READ + KEY_WRITE</Permissions>
+				<Inheritance>SUB_CONTAINERS_AND_OBJECTS_INHERIT</Inheritance>
+				<Sequence>
+					<Before>StartServices</Before>
+					<Condition>IsNotInstalled AND IsInstalling</Condition>
+				</Sequence>
+			</AccessControl>
+		</Component>
+	</Package>
+</VSDX>

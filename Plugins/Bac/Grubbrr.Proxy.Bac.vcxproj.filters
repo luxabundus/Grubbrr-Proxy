@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="BacCardReaderPlugin.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="BacCardReaderPlugin.h" />
+    <ClInclude Include="resource.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="CSP.EMV.InteropStream.dll">
+      <Filter>Binary Files</Filter>
+    </None>
+    <None Include="libeay32.dll">
+      <Filter>Binary Files</Filter>
+    </None>
+    <None Include="msvcp140.dll">
+      <Filter>Binary Files</Filter>
+    </None>
+    <None Include="ssleay32.dll">
+      <Filter>Binary Files</Filter>
+    </None>
+    <None Include="vcruntime140.dll">
+      <Filter>Binary Files</Filter>
+    </None>
+    <None Include="Ijwhost.dll">
+      <Filter>Binary Files</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Binary Files">
+      <UniqueIdentifier>{3a1a236f-a63d-402d-9606-5a0870c808f4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{ff70888d-578b-4773-918c-56891576016b}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Grubbrr.Proxy.Bac.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+</Project>
