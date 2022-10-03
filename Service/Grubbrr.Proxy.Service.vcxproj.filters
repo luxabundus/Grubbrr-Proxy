@@ -13,36 +13,36 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Admin Files">
-      <UniqueIdentifier>{25313d10-8a64-47ca-8cd6-509d2c7e4aa8}</UniqueIdentifier>
+    <Filter Include="AdminUI Files">
+      <UniqueIdentifier>{c39376e8-0eb1-4d72-b2a3-717c95418f96}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="pch.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ProxyModel.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ProxyApiServer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ProxyAdminServer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ProxyServer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Grubbrr.Proxy.Service.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="pch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ProxyApiServer.Handlers.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ProxyTerminal.cpp">
+    <ClCompile Include="ProxyModel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ProxyRegKey.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ProxyServer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ProxyTerminal.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ProxyAdminServer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ProxyApiServer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -50,16 +50,10 @@
     <ClInclude Include="pch.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="resource.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="ProxyModel.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ProxyApiServer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ProxyAdminServer.h">
+    <ClInclude Include="ProxyRegKey.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ProxyServer.h">
@@ -68,28 +62,34 @@
     <ClInclude Include="ProxyTerminal.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ProxyRegKey.h">
+    <ClInclude Include="ProxyAdminServer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ProxyApiServer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="AdminUI\admin.htm">
+      <Filter>AdminUI Files</Filter>
+    </None>
+    <None Include="AdminUI\admin.js">
+      <Filter>AdminUI Files</Filter>
+    </None>
+    <None Include="AdminUI\jquery-1.12.3.min.js">
+      <Filter>AdminUI Files</Filter>
+    </None>
+    <None Include="AdminUI\admin.css">
+      <Filter>AdminUI Files</Filter>
+    </None>
+    <None Include="..\Setup\Install\Grubbrr.Proxy.vsdx" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Grubbrr.Proxy.Service.rc">
       <Filter>Resource Files</Filter>
     </ResourceCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\Setup\Install\Grubbrr.Proxy.vsdx" />
-    <None Include="AdminUI\admin.css">
-      <Filter>Admin Files</Filter>
-    </None>
-    <None Include="AdminUI\admin.htm">
-      <Filter>Admin Files</Filter>
-    </None>
-    <None Include="AdminUI\admin.js">
-      <Filter>Admin Files</Filter>
-    </None>
-    <None Include="AdminUI\jquery-1.12.3.min.js">
-      <Filter>Admin Files</Filter>
-    </None>
   </ItemGroup>
 </Project>

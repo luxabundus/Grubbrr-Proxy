@@ -15,19 +15,25 @@
     {
         "Entry"
         {
-        "MsmKey" = "8:_043A3739FF8840F7AD7D17625BBE0A36"
+        "MsmKey" = "8:_090E7F4096404C7BA4F41AB2019B121C"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_4A135B5E3DC944E29E383DA3659DA51B"
+        "MsmKey" = "8:_1144894F001E404CA6A8C9A147330F37"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_911768E032B74BF6AEE1DCEB223692AE"
+        "MsmKey" = "8:_6891784AA5C6448D879B1A8C9B0555A4"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_FB665293D6CD44FFA78A5196DC47E8D5"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -192,15 +198,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Proxy Service"
-        "ProductCode" = "8:{86AD0846-B50C-44ED-9515-0147ACD8231F}"
-        "PackageCode" = "8:{FE1C0CD2-3917-45F3-8CE0-3348A5CD85B9}"
+        "ProductCode" = "8:{ECA89AD6-C10F-4A7D-BA35-E09D649AFA68}"
+        "PackageCode" = "8:{23A69C64-2FFB-4794-B532-74DB9425E3ED}"
         "UpgradeCode" = "8:{C70B8276-A636-4F84-915B-8CCD591357E8}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
-        "ProductVersion" = "8:0.0.2"
+        "ProductVersion" = "8:0.0.5"
         "Manufacturer" = "8:Grubbrr"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
@@ -329,7 +335,7 @@
                                                             "Condition" = "8:"
                                                             "Transitive" = "11:FALSE"
                                                             "ValueTypes" = "3:1"
-                                                            "Value" = "8:Grubbrr.Proxy.Bac.dll"
+                                                            "Value" = "8:Grubbrr.Proxy.Plugin.Bac.dll"
                                                             }
                                                         }
                                                     }
@@ -784,35 +790,7 @@
         }
         "ProjectOutput"
         {
-            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_043A3739FF8840F7AD7D17625BBE0A36"
-            {
-            "SourcePath" = "8:..\\..\\..\\Output\\Debug\\Grubbrr.Proxy.Common.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_DC52DA418FCE474FB735ED2C2E97523B"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            "ProjectOutputGroupRegister" = "3:1"
-            "OutputConfiguration" = "8:"
-            "OutputGroupCanonicalName" = "8:Built"
-            "OutputProjectGuid" = "8:{89B0ABDD-CBBD-4DE8-A59A-E9D4FC1EB70C}"
-            "ShowKeyOutput" = "11:TRUE"
-                "ExcludeFilters"
-                {
-                }
-            }
-            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_0966CEF37CB341C0B57B0A7E6CA0CD21"
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_04615D65D67C4C9EA08A19B725C472BE"
             {
             "SourcePath" = "8:"
             "TargetName" = "8:"
@@ -834,15 +812,15 @@
             "ProjectOutputGroupRegister" = "3:1"
             "OutputConfiguration" = "8:"
             "OutputGroupCanonicalName" = "8:ContentFiles"
-            "OutputProjectGuid" = "8:{85215EA1-70AE-4066-8631-167ECDCD654C}"
+            "OutputProjectGuid" = "8:{30F1BCFF-DE1C-480F-8849-DD553FAC8712}"
             "ShowKeyOutput" = "11:TRUE"
                 "ExcludeFilters"
                 {
                 }
             }
-            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_4A135B5E3DC944E29E383DA3659DA51B"
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_090E7F4096404C7BA4F41AB2019B121C"
             {
-            "SourcePath" = "8:..\\..\\..\\Output\\Debug\\Grubbrr.Proxy.Service.exe"
+            "SourcePath" = "8:..\\..\\..\\Output\\Release\\x64\\Grubbrr.Proxy.Plugin.BAC.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_DC52DA418FCE474FB735ED2C2E97523B"
@@ -862,13 +840,69 @@
             "ProjectOutputGroupRegister" = "3:1"
             "OutputConfiguration" = "8:"
             "OutputGroupCanonicalName" = "8:Built"
-            "OutputProjectGuid" = "8:{F6991F1C-0C19-42CB-8CAC-C37D26082D27}"
+            "OutputProjectGuid" = "8:{30F1BCFF-DE1C-480F-8849-DD553FAC8712}"
             "ShowKeyOutput" = "11:TRUE"
                 "ExcludeFilters"
                 {
                 }
             }
-            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_728B1AFD09044730B8E8C48EC90A9A54"
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_1144894F001E404CA6A8C9A147330F37"
+            {
+            "SourcePath" = "8:..\\..\\..\\Output\\Release\\x64\\Grubbrr.Proxy.Service.exe"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_DC52DA418FCE474FB735ED2C2E97523B"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            "ProjectOutputGroupRegister" = "3:1"
+            "OutputConfiguration" = "8:"
+            "OutputGroupCanonicalName" = "8:Built"
+            "OutputProjectGuid" = "8:{6261B116-31D2-4189-8E29-A4D48172F14C}"
+            "ShowKeyOutput" = "11:TRUE"
+                "ExcludeFilters"
+                {
+                }
+            }
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_6891784AA5C6448D879B1A8C9B0555A4"
+            {
+            "SourcePath" = "8:..\\..\\..\\Output\\Release\\x64\\Grubbrr.Proxy.Common.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_DC52DA418FCE474FB735ED2C2E97523B"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            "ProjectOutputGroupRegister" = "3:1"
+            "OutputConfiguration" = "8:"
+            "OutputGroupCanonicalName" = "8:Built"
+            "OutputProjectGuid" = "8:{959CAE2B-02D4-478C-8C94-3C310D97E4AB}"
+            "ShowKeyOutput" = "11:TRUE"
+                "ExcludeFilters"
+                {
+                }
+            }
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_E4A7970E4A8447A7B35B069010E00298"
             {
             "SourcePath" = "8:"
             "TargetName" = "8:"
@@ -890,13 +924,13 @@
             "ProjectOutputGroupRegister" = "3:1"
             "OutputConfiguration" = "8:"
             "OutputGroupCanonicalName" = "8:ContentFiles"
-            "OutputProjectGuid" = "8:{89B0ABDD-CBBD-4DE8-A59A-E9D4FC1EB70C}"
+            "OutputProjectGuid" = "8:{30557C1C-D9BE-436C-9906-2CB870FF38D4}"
             "ShowKeyOutput" = "11:TRUE"
                 "ExcludeFilters"
                 {
                 }
             }
-            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_75C9D506B5D1496F9A340DAE8BE4CD16"
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_E9C386301B3143D8B6E5BE1FF5536672"
             {
             "SourcePath" = "8:"
             "TargetName" = "8:"
@@ -918,15 +952,15 @@
             "ProjectOutputGroupRegister" = "3:1"
             "OutputConfiguration" = "8:"
             "OutputGroupCanonicalName" = "8:ContentFiles"
-            "OutputProjectGuid" = "8:{F6991F1C-0C19-42CB-8CAC-C37D26082D27}"
+            "OutputProjectGuid" = "8:{6261B116-31D2-4189-8E29-A4D48172F14C}"
             "ShowKeyOutput" = "11:TRUE"
                 "ExcludeFilters"
                 {
                 }
             }
-            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_911768E032B74BF6AEE1DCEB223692AE"
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_FB665293D6CD44FFA78A5196DC47E8D5"
             {
-            "SourcePath" = "8:..\\..\\..\\Output\\Debug\\Grubbrr.Proxy.Bac.dll"
+            "SourcePath" = "8:..\\..\\..\\Output\\Release\\x64\\Grubbrr.Proxy.Plugin.Test.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_DC52DA418FCE474FB735ED2C2E97523B"
@@ -946,13 +980,13 @@
             "ProjectOutputGroupRegister" = "3:1"
             "OutputConfiguration" = "8:"
             "OutputGroupCanonicalName" = "8:Built"
-            "OutputProjectGuid" = "8:{85215EA1-70AE-4066-8631-167ECDCD654C}"
+            "OutputProjectGuid" = "8:{30557C1C-D9BE-436C-9906-2CB870FF38D4}"
             "ShowKeyOutput" = "11:TRUE"
                 "ExcludeFilters"
                 {
                 }
             }
-            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_BE16053AD47F4E37A5CB233AB794B68E"
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_FECCDCB91DD94D6FB3A859755EAF7197"
             {
             "SourcePath" = "8:"
             "TargetName" = "8:"
@@ -973,8 +1007,8 @@
             "IsolateTo" = "8:"
             "ProjectOutputGroupRegister" = "3:1"
             "OutputConfiguration" = "8:"
-            "OutputGroupCanonicalName" = "8:LocalizedResourceDlls"
-            "OutputProjectGuid" = "8:{85215EA1-70AE-4066-8631-167ECDCD654C}"
+            "OutputGroupCanonicalName" = "8:ContentFiles"
+            "OutputProjectGuid" = "8:{959CAE2B-02D4-478C-8C94-3C310D97E4AB}"
             "ShowKeyOutput" = "11:TRUE"
                 "ExcludeFilters"
                 {

@@ -51,8 +51,8 @@ END
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 0,0,2,0
- PRODUCTVERSION 0,0,2,0
+ FILEVERSION 0,0,5,0
+ PRODUCTVERSION 0,0,5,0
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -69,12 +69,12 @@ BEGIN
         BEGIN
             VALUE "CompanyName", "Grubbrr"
             VALUE "FileDescription", "Grubbrr Proxy Service"
-            VALUE "FileVersion", "0.0.2.0"
+            VALUE "FileVersion", "0.0.5.0"
             VALUE "InternalName", "Grubbr.Proxy.Service"
             VALUE "LegalCopyright", "Copyright (C) Grubbrr. All rights reserved"
             VALUE "OriginalFilename", "Grubbr.Proxy.Service"
             VALUE "ProductName", "Grubbrr Proxy"
-            VALUE "ProductVersion", "0.0.2.0"
+            VALUE "ProductVersion", "0.0.5.0"
         END
     END
     BLOCK "VarFileInfo"

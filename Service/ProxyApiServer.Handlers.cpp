@@ -11,6 +11,15 @@ END_HTTP_MAP()
 
 void ProxyApiServer::onPayment(HttpServerContext &context)
 {
+	String user, password;
+	if (!context.request.getBasicAuth(user, password)
+		|| (user != "Grubbrr.Proxy.Api.Dev")
+		|| (password != "8TG$t37p!"))
+	{
+		context.response.challengeBasicAuth("Grubbrr.Dev");
+		return;
+	}
+
 	Json jsonRequest, jsonResponse;
 
 	if (!context.request.getContent(jsonRequest))
@@ -60,6 +69,15 @@ void ProxyApiServer::onPayment(HttpServerContext &context)
 
 void ProxyApiServer::onRefund(HttpServerContext &context)
 {
+	String user, password;
+	if (!context.request.getBasicAuth(user, password)
+		|| (user != "Grubbrr.Proxy.Api.Dev")
+		|| (password != "8TG$t37p!"))
+	{
+		context.response.challengeBasicAuth("Grubbrr.Dev");
+		return;
+	}
+
 	Json jsonRequest, jsonResponse;
 
 	if (!context.request.getContent(jsonRequest))

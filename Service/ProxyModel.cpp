@@ -3,9 +3,17 @@
 
 
 #if defined(_DEBUG)
-#define DEV_PLUGIN_DIR "..\\..\\Output\\Debug\\"
+	#if defined(_WIN64)
+	#define DEV_PLUGIN_DIR "..\\..\\Output\\Debug\\x64\\"
+	#else
+	#define DEV_PLUGIN_DIR "..\\..\\Output\\Debug\\Win32\\"
+	#endif
 #else
-#define DEV_PLUGIN_DIR "..\\..\\Output\\Release\\"
+	#if defined(_WIN64)
+	#define DEV_PLUGIN_DIR "..\\..\\Output\\Release\\x64\\"
+	#else
+	#define DEV_PLUGIN_DIR "..\\..\\Output\\Release\\Win32\\"
+	#endif
 #endif
 
 

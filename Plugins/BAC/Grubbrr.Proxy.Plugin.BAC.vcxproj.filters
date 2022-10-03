@@ -13,42 +13,41 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Binary Files">
+      <UniqueIdentifier>{9247baac-55f7-4c0f-8b2c-6a7e5f3c3da9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="pch.h">
+    <ClInclude Include="framework.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ProxyCardReaderPlugin.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ProxyPlugin.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ProxyString.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Framework.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Includes.h">
+    <ClInclude Include="BacCardReaderPlugin.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="dllmain.cpp">
+    <ClCompile Include="BacCardReaderPlugin.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="pch.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ProxyPlugin.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ProxyString.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ProxyCardReaderPlugin.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Ijwhost.dll">
+      <Filter>Binary Files</Filter>
+    </None>
+    <None Include="libeay32.dll">
+      <Filter>Binary Files</Filter>
+    </None>
+    <None Include="msvcp140.dll">
+      <Filter>Binary Files</Filter>
+    </None>
+    <None Include="ssleay32.dll">
+      <Filter>Binary Files</Filter>
+    </None>
+    <None Include="vcruntime140.dll">
+      <Filter>Binary Files</Filter>
+    </None>
+    <None Include="CSP.EMV.InteropStream.dll">
+      <Filter>Binary Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

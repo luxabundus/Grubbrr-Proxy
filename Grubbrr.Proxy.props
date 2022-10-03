@@ -2,7 +2,7 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(DevAfxPath)\Afx.Cpp.props" />
   <PropertyGroup>
-    <ProxyOutputPath>$(SolutionDir)..\Output\$(Configuration)</ProxyOutputPath>
+    <ProxyOutputPath>$(SolutionDir)..\Output\$(Configuration)\$(Platform)</ProxyOutputPath>
     <OutDir>$(ProxyOutputPath)\</OutDir>
     <IncludePath>$(SolutionDir)Framework;$(IncludePath)</IncludePath>
     <LibraryPath>$(ProxyOutputPath);$(LibraryPath)</LibraryPath>

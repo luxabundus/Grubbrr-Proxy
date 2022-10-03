@@ -1,5 +1,24 @@
 #include "pch.h"
+#include <Objbase.h>
+#pragma comment(lib, "Ole32")
+#pragma comment(lib, "Rpcrt4")
 #include "TestCardReaderPlugin.h"
+
+
+ProxyString CreateTransactionId()
+{
+	GUID transactionId;
+	CoCreateGuid(&transactionId);
+
+	unsigned char *pUID = NULL;
+	UuidToString(&transactionId, &pUID);
+
+	ProxyString str((char*)pUID);
+
+	RpcStringFree(&pUID);
+
+	return str;
+}
 
 
 DEFINE_PROXY_PLUGIN(TestCardReaderPlugin)
@@ -45,7 +64,7 @@ void TestCardReaderPlugin::sendPayment(const TransactionRequest &request, Transa
 		response.status = "success";
 		response.statusCode = "00";
 		response.statusMessage = "payment: success";
-		response.transactionId = "ABC-123";
+		response.transactionId = CreateTransactionId();
 		response.cardScheme = "VISA";
 	}
 }
@@ -70,5 +89,6 @@ void TestCardReaderPlugin::sendRefund(const TransactionRequest &request, Transac
 		response.status = "success";
 		response.statusCode = "00";
 		response.statusMessage = "refund: success";
+		response.transactionId = CreateTransactionId();
 	}
 }

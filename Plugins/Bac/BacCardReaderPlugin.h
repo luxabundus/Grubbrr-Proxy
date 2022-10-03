@@ -1,8 +1,16 @@
 #pragma once
+#include <vcclr.h>
+#include <msclr\auto_gcroot.h>
 #include <Common/Includes.h>
 
+#using "CSP.EMV.InteropStream.dll"
 
-class BacCardReaderWrapper;
+#pragma warning (disable: 4691)
+
+using namespace System;
+using namespace System::Reflection;
+using namespace CSP::EMV::InteropStream;
+
 
 class BacCardReaderPlugin : public ProxyCardReaderPlugin
 {
@@ -18,5 +26,5 @@ public:
 	virtual void sendRefund(const TransactionRequest &request, TransactionResponse &response);
 
 private:
-	BacCardReaderWrapper *m_pWrapper;
+	msclr::auto_gcroot<EMVStreamRequest^> m_pRequest;
 };
