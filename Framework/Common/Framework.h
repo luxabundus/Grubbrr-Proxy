@@ -2,8 +2,9 @@
 
 
 #include <string>
-#include <map>
 #include <exception>
+#include <map>
+#include <vector>
 
 #include <windows.h>
 

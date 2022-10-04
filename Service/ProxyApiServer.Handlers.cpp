@@ -5,126 +5,81 @@
 BEGIN_HTTP_MAP(ProxyApiServer)
 	ON_HTTP_METHOD("POST", "/payment", onPayment)
 	ON_HTTP_METHOD("POST", "/refund", onRefund)
-	ON_HTTP_METHOD("GET", "/status", onStatus)
+	ON_HTTP_METHOD("POST", "/settle", onSettle)
+	ON_HTTP_METHOD("GET,POST", "/status", onStatus)
 END_HTTP_MAP()
 
 
 void ProxyApiServer::onPayment(HttpServerContext &context)
 {
-	String user, password;
-	if (!context.request.getBasicAuth(user, password)
-		|| (user != "Grubbrr.Proxy.Api.Dev")
-		|| (password != "8TG$t37p!"))
-	{
-		context.response.challengeBasicAuth("Grubbrr.Dev");
-		return;
-	}
+	Accessor accessor(this, context);
 
-	Json jsonRequest, jsonResponse;
+	Json apiRequest = accessor.getApiRequest();
 
-	if (!context.request.getContent(jsonRequest))
-	{
-		throw HttpException(HttpStatus::BAD_REQUEST);
-	}
+	Json apiResponse = apiRequest;
+	apiResponse["data"] = execCardTransaction(
+		accessor,
+		apiRequest,
+		[](ProxyCardReaderPlugin &cardReader, ProxyStringMap &cardRequest) {
+			return cardReader.sendPayment(cardRequest);
+		}
+	);
 
-	// Lookup terminal configuration.
-	String terminalId = jsonRequest["terminalId"];
-	if (terminalId.isEmpty())
-	{
-		terminalId = "000";
-	}
-
-	ProxyTerminal *pTerminal = getModel().lookupTerminal(terminalId);
-	if (!pTerminal)
-	{
-		throw HttpException(HttpStatus::BAD_REQUEST, "unknown terminal-id: %s", terminalId);
-	}
-
-	ProxyCardReaderPlugin *pCardReader = pTerminal->getCardReader();
-	if (!pCardReader)
-	{
-		throw HttpException(HttpStatus::SERVER_ERROR, "undefined card-reader");
-	}
-
-	ProxyCardReaderPlugin::TransactionRequest pluginRequest;
-	ProxyCardReaderPlugin::TransactionResponse pluginResponse;
-
-	initPluginRequest(pluginRequest, jsonRequest);
-
-	try
-	{
-		pCardReader->sendPayment(pluginRequest, pluginResponse);
-	}
-	catch (ProxyPlugin::Exception &x)
-	{
-		throw HttpException(HttpStatus::SERVER_ERROR, "(%d) %s", x.code, x.message);
-	}
-
-	initJsonResponse(jsonResponse, pluginResponse);
-	jsonResponse["echo"] = jsonRequest;
-
-	context.response.setContent(jsonResponse);
+	accessor.setApiResponse(apiResponse);
 }
-
 
 void ProxyApiServer::onRefund(HttpServerContext &context)
 {
-	String user, password;
-	if (!context.request.getBasicAuth(user, password)
-		|| (user != "Grubbrr.Proxy.Api.Dev")
-		|| (password != "8TG$t37p!"))
-	{
-		context.response.challengeBasicAuth("Grubbrr.Dev");
-		return;
-	}
+	Accessor accessor(this, context);
 
-	Json jsonRequest, jsonResponse;
+	Json apiRequest = accessor.getApiRequest();
 
-	if (!context.request.getContent(jsonRequest))
-	{
-		throw HttpException(HttpStatus::BAD_REQUEST);
-	}
+	Json apiResponse = apiRequest;
+	apiResponse["data"] = execCardTransaction(
+		accessor,
+		apiRequest,
+		[](ProxyCardReaderPlugin &cardReader, ProxyStringMap &cardRequest) {
+			return cardReader.sendRefund(cardRequest);
+		}
+	);
 
-	String terminalId = jsonRequest["terminalId"];
-	if (terminalId.isEmpty())
-	{
-		terminalId = "000";
-	}
-
-	ProxyTerminal *pTerminal = getModel().lookupTerminal(terminalId);
-	if (!pTerminal)
-	{
-		throw HttpException(HttpStatus::BAD_REQUEST, "unknown terminal-id: %s", terminalId);
-	}
-
-	ProxyCardReaderPlugin *pCardReader = pTerminal->getCardReader();
-	if (!pCardReader)
-	{
-		throw HttpException(HttpStatus::SERVER_ERROR, "undefined card-reader");
-	}
-
-	ProxyCardReaderPlugin::TransactionRequest pluginRequest;
-	ProxyCardReaderPlugin::TransactionResponse pluginResponse;
-
-	initPluginRequest(pluginRequest, jsonRequest);
-
-	try
-	{
-		pCardReader->sendRefund(pluginRequest, pluginResponse);
-	}
-	catch (ProxyPlugin::Exception &x)
-	{
-		throw HttpException(HttpStatus::SERVER_ERROR, "(%d) %s", x.code, x.message);
-	}
-
-	initJsonResponse(jsonResponse, pluginResponse);
-	jsonResponse["echo"] = jsonRequest;
-
-	context.response.setContent(jsonResponse);
+	accessor.setApiResponse(apiResponse);
 }
 
+void ProxyApiServer::onSettle(HttpServerContext &context)
+{
+	Accessor accessor(this, context);
+
+	Json apiRequest = accessor.getApiRequest();
+
+	Json apiResponse = execCardTransaction(
+		accessor,
+		apiRequest,
+		[](ProxyCardReaderPlugin &cardReader, ProxyStringMap &cardRequest) {
+			return cardReader.settleTransactions(cardRequest);
+		}
+	);
+
+	accessor.setApiResponse(apiResponse);
+}
 
 void ProxyApiServer::onStatus(HttpServerContext &context)
 {
-	context.response.setContent(String("Status"));
+	Accessor accessor(this, context);
+
+	Json apiRequest = accessor.getApiRequest(false);
+	if (apiRequest.isUndefined())
+	{
+		apiRequest["terminalId"] = context.request.getQueryParam("terminalId");
+	}
+
+	Json apiResponse = execCardTransaction(
+		accessor,
+		apiRequest,
+		[](ProxyCardReaderPlugin &cardReader, ProxyStringMap &cardRequest) {
+			return cardReader.queryStatus();
+		}
+	);
+
+	accessor.setApiResponse(apiResponse);
 }

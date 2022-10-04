@@ -13,10 +13,10 @@ ProxyPlugin::ProxyPlugin() :
 
 ProxyPlugin::~ProxyPlugin()
 {
-// 	if (m_hModule)
-// 	{
-// 		FreeLibrary(m_hModule);
-// 	}
+	// 	if (m_hModule)
+	// 	{
+	// 		FreeLibrary(m_hModule);
+	// 	}
 }
 
 
@@ -68,4 +68,19 @@ ProxyPlugin *ProxyPlugin::Load(const char *className, const char *filePath, Prox
 	}
 
 	return pPlugin;
+}
+
+
+void ProxyPlugin::Unload(ProxyPlugin *pPlugin)
+{
+	if (!pPlugin || !pPlugin->m_hModule)
+	{
+		throw Exception(ERROR_INVALID_DATA, "Unload");
+	}
+
+	pPlugin->exit();
+
+	delete pPlugin;
+
+	::FreeLibrary(pPlugin->m_hModule);
 }

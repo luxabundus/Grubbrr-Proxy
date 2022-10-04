@@ -20,10 +20,10 @@ public:
 	virtual void init(const ProxyStringMap &paramMap);
 	virtual void exit();
 
-	virtual void getStatus(ProxyStringMap &statusMap);
-
-	virtual void sendPayment(const TransactionRequest &request, TransactionResponse &response);
-	virtual void sendRefund(const TransactionRequest &request, TransactionResponse &response);
+	virtual ProxyStringMap sendPayment(ProxyStringMap &request);
+	virtual ProxyStringMap sendRefund(ProxyStringMap &request);
+	virtual ProxyStringMap settleTransactions(ProxyStringMap &settings);
+	virtual ProxyStringMap queryStatus();
 
 private:
 	msclr::auto_gcroot<EMVStreamRequest^> m_pRequest;

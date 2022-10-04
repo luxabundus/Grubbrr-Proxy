@@ -33,9 +33,6 @@ private:
 };
 
 
-using ProxyStringMap = std::map<ProxyString, ProxyString>;
-
-
 inline ProxyString::ProxyString() :
 	m_string(nullptr)
 {
@@ -96,7 +93,7 @@ inline ProxyString &ProxyString::operator = (const std::string &string)
 
 inline bool ProxyString::operator == (const char *string) const
 {
-	return std::strcmp(m_string, string) == 0;
+	return std::strcmp(m_string ? m_string : "", string) == 0;
 }
 
 inline ProxyString::operator const char * () const

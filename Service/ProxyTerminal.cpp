@@ -10,7 +10,7 @@ ProxyTerminal::ProxyTerminal(const String &terminalId) :
 
 ProxyTerminal::~ProxyTerminal()
 {
-	delete m_pCardReader;
+	exit();
 }
 
 
@@ -20,6 +20,14 @@ void ProxyTerminal::init(ProxyModel &model)
 	m_pCardReader = dynamic_cast<ProxyCardReaderPlugin*>(initPlugin(model, "CardReader"));
 }
 
+
+void ProxyTerminal::exit()
+{
+	if (m_pCardReader)
+	{
+		ProxyPlugin::Unload(m_pCardReader);
+	}
+}
 
 ProxyPlugin *ProxyTerminal::initPlugin(ProxyModel &model, const String &pluginType)
 {

@@ -162,6 +162,7 @@
   <ItemGroup>
     <ClInclude Include="BacCardReaderPlugin.h" />
     <ClInclude Include="framework.h" />
+    <ClInclude Include="resource1.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BacCardReaderPlugin.cpp">
@@ -190,6 +191,9 @@
     <None Include="vcruntime140.dll">
       <DeploymentContent>true</DeploymentContent>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Grubbrr.Proxy.Plugin.BAC.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

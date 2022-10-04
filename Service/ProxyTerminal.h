@@ -8,6 +8,7 @@ public:
 	~ProxyTerminal();
 
 	void init(ProxyModel &model);
+	void exit();
 
 	const String &getTerminalId();
 	ProxyCardReaderPlugin *getCardReader();

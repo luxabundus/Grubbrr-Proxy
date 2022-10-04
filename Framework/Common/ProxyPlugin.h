@@ -22,9 +22,10 @@ public:
 	virtual void init(const ProxyStringMap &paramMap) = 0;
 	virtual void exit() = 0;
 
-	virtual void getStatus(ProxyStringMap &statusMap) = 0;
+	virtual ProxyStringMap queryStatus() = 0;
 
 	static ProxyPlugin *Load(const char *className, const char *filePath, ProxyStringMap &configParams);
+	static void Unload(ProxyPlugin *pPlugin);
 
 private:
 	HMODULE m_hModule;

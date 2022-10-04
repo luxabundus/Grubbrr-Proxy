@@ -13,7 +13,7 @@ public:
 		forEachStringValue(
 			[&settings](const char *name, const char *value) mutable
 			{
-				if (*name && (settings.find(name) == settings.end()))
+				if (*name && !settings.contains(name))
 				{
 					settings[name] = value;
 				}

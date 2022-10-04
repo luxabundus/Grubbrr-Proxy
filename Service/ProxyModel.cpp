@@ -25,76 +25,11 @@ ProxyModel::ProxyModel()
 bool ProxyModel::init()
 {
 	m_pluginRootPath = AfxGetCurrentDirectory(true);
-	if (AfxGetSessionId()) // running a dev instance, i.e. under a user session.
+	if (AfxGetSessionId()) // running in a dev instance, i.e. under a user session.
 	{
 		m_pluginRootPath = AfxCanonicalizePath(m_pluginRootPath + DEV_PLUGIN_DIR);
 	}
 
-
-	/*
-	* Plugins
-	*/
-/*
-	RegKey pluginRootKey;
-	if (!pluginRootKey.open(modelSettings, "Plugins"))
-	{
-		AfxLogLastError("ProxyModel::init@OpenPluginSettings");
-		return false;
-	}
-
-	String pluginRootPath = AfxGetCurrentDirectory(true);
-	if (AfxGetSessionId()) // running a dev instance, i.e. under a user session.
-	{
-		pluginRootPath = AfxCanonicalizePath(pluginRootPath + DEV_PLUGIN_DIR);
-	}
-
-	pluginRootKey.forEachKey(
-		[this, &pluginRootPath, &pluginRootKey](const char *name) mutable
-		{
-			String pluginName = name;
-
-			RegKey pluginSettings;
-			if (pluginSettings.open(pluginRootKey, pluginName))
-			{
-				String pluginPath = pluginRootPath + pluginSettings.getStringValue("");
-
-				ProxyStringMap params;
-				pluginSettings.forEachStringValue(
-					[this, &params](const char *name, const char *value) mutable
-					{
-						if (*name)
-						{
-							params["name"] = value;
-						}
-						return true;
-					}
-				);
-
-				try
-				{
-					AfxLogInfo("loading '%s' from '%s'", pluginName, pluginPath);
-					ProxyPlugin *pPlugin = ProxyPlugin::Load(pluginName, pluginPath, params);
-					m_plugins[pluginName] = pPlugin;
-					AfxLogInfo("loaded '%s'", pluginName);
-				}
-				catch (ProxyPlugin::Exception &x)
-				{
-					AfxLogError(x.code, "ProxyModel::init@LoadPlugin(%s) %s:", pluginPath, x.message);
-				}
-				catch (...)
-				{
-					AfxLogError("ProxyModel::init@LoadPlugin(%s) - unepxected error", pluginPath);
-				}
-			}
-			else
-			{
-				AfxLogError("ProxyModel::init@OpenPluginKey(%s)", pluginName);
-			}
-
-			return true;
-		}
-	);
-*/
 	return true;
 }
 
@@ -115,9 +50,13 @@ ProxyTerminal *ProxyModel::lookupTerminal(const String &terminalId)
 	}
 	else
 	{
-		pTerminal = new ProxyTerminal(terminalId);
-		pTerminal->init(*this);
-		m_terminals[terminalId] = pTerminal;
+		ProxyRegKey terminalKey;
+		if (terminalKey.open(HKEY_LOCAL_MACHINE, ProxyRegKey::TERMINAL_ROOT_KEY + "\\" + terminalId))
+		{
+			pTerminal = new ProxyTerminal(terminalId);
+			pTerminal->init(*this);
+			m_terminals[terminalId] = pTerminal;
+		}
 	}
 
 	return pTerminal;

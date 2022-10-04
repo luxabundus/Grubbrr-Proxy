@@ -4,3 +4,4 @@
 
 #include "Framework.h"
 #include "ProxyString.h"
+#include "ProxyStringMap.h"

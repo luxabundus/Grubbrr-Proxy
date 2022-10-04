@@ -24,43 +24,92 @@ bool ProxyApiServer::initServer(RegKey &settings)
 }
 
 
-void ProxyApiServer::initPluginRequest(ProxyCardReaderPlugin::TransactionRequest &pluginRequest, const Json &jsonRequest)
+Json ProxyApiServer::execCardTransaction(
+	Accessor &accessor,
+	Json &apiRequest,
+	std::function<ProxyStringMap(ProxyCardReaderPlugin&, ProxyStringMap&)> &&function)
 {
-	pluginRequest.orderId = (const char*)jsonRequest["orderId"];
-	if (pluginRequest.orderId.empty())
+	Json apiResponse;
+
+	String terminalId = apiRequest["terminalId"];
+	if (terminalId.isEmpty())
 	{
-		throw HttpException(HttpStatus::SERVER_ERROR, String("missing order-id"));
+		terminalId = "000";
 	}
 
-	if (jsonRequest.hasProperty("subTotal"))
+	ProxyCardReaderPlugin &cardReader = accessor.getCardReader(terminalId);
+
+	try
 	{
-		pluginRequest.subTotal = jsonRequest["subTotal"];
+		ProxyStringMap cardRequest = JsonToProxy(apiRequest);
+		ProxyStringMap cardResponse = function(cardReader, cardRequest);
+
+		apiResponse = ProxyToJson(cardResponse);
 	}
-	else
+	catch (ProxyPlugin::Exception &x)
 	{
-		throw HttpException(HttpStatus::SERVER_ERROR, String("missing sub-total"));
+		throw HttpException(HttpStatus::SERVER_ERROR, "(%d) %s", x.code, x.message);
 	}
 
-	if (jsonRequest.hasProperty("taxTotal"))
-	{
-		pluginRequest.taxTotal = jsonRequest["taxTotal"];
-	}
-	else
-	{
-		throw HttpException(HttpStatus::SERVER_ERROR, String("missing tax-total"));
-	}
+	return apiResponse;
+}
 
-	if (jsonRequest.hasProperty("settle"))
+
+
+ProxyApiServer::Accessor::Accessor(ProxyApiServer *pServer, HttpServerContext &context) :
+	m_pServer(pServer),
+	m_context(context)
+{
+	String user, password;
+	if (!m_context.request.getBasicAuth(user, password)
+		|| (user != "Grubbrr.Proxy.Api.Dev")
+		|| (password != "8TG$t37p!"))
 	{
-		pluginRequest.settle = jsonRequest["settle"];
+		m_context.response.throwBasicAuth("Grubbrr.Proxy.Dev");
 	}
 }
 
-void ProxyApiServer::initJsonResponse(Json &jsonResponse, const ProxyCardReaderPlugin::TransactionResponse &pluginResponse)
+Json ProxyApiServer::Accessor::getApiRequest(bool throwIfUndefined)
 {
-	jsonResponse["transactionId"] = pluginResponse.transactionId.data();
-	jsonResponse["status"] = pluginResponse.status.data();
-	jsonResponse["statusCode"] = pluginResponse.statusCode.data();
-	jsonResponse["statusMessage"] = pluginResponse.statusMessage.data();
-	jsonResponse["cardScheme"] = pluginResponse.cardScheme.data();
+	Json apiRequest;
+	if ((!m_context.request.getContent(apiRequest) || apiRequest.isUndefined())
+		&& throwIfUndefined)
+	{
+		throw HttpException(HttpStatus::BAD_REQUEST);
+	}
+	return apiRequest;
+}
+
+void ProxyApiServer::Accessor::setApiResponse(Json &apiResponse)
+{
+	m_context.response.setContent(apiResponse);
+}
+
+ProxyTerminal &ProxyApiServer::Accessor::getTerminal(const String &terminalId)
+{
+	if (terminalId.isEmpty())
+	{
+		throw HttpException(HttpStatus::BAD_REQUEST, "missing terminal-id");
+	}
+
+	ProxyTerminal *pTerminal = m_pServer->getModel().lookupTerminal(terminalId);
+	if (!pTerminal)
+	{
+		throw HttpException(HttpStatus::BAD_REQUEST, "unknown terminal-id: %s", terminalId);
+	}
+
+	return *pTerminal;
+}
+
+ProxyCardReaderPlugin &ProxyApiServer::Accessor::getCardReader(const String &terminalId)
+{
+	ProxyTerminal &terminal = getTerminal(terminalId);
+
+	ProxyCardReaderPlugin *pCardReader = terminal.getCardReader();
+	if (!pCardReader)
+	{
+		throw HttpException(HttpStatus::SERVER_ERROR, "undefined card-reader");
+	}
+
+	return *pCardReader;
 }

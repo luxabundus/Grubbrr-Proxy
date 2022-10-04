@@ -20,17 +20,30 @@ void BacCardReaderPlugin::exit()
 }
 
 
-void BacCardReaderPlugin::getStatus(ProxyStringMap &statusMap)
+ProxyStringMap BacCardReaderPlugin::sendPayment(ProxyStringMap &request)
 {
+	ProxyStringMap response;
+	return response;
 }
 
 
-void BacCardReaderPlugin::sendPayment(const TransactionRequest &request, TransactionResponse &response)
+ProxyStringMap BacCardReaderPlugin::sendRefund(ProxyStringMap &request)
 {
-	m_pRequest->sendData();
+	ProxyStringMap response;
+	return response;
 }
 
 
-void BacCardReaderPlugin::sendRefund(const TransactionRequest &request, TransactionResponse &response)
+ProxyStringMap BacCardReaderPlugin::settleTransactions(ProxyStringMap &settings)
 {
+	ProxyStringMap response;
+	return response;
 }
+
+
+ProxyStringMap BacCardReaderPlugin::queryStatus()
+{
+	ProxyStringMap response;
+	return response;
+}
+

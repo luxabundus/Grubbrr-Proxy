@@ -29,3 +29,26 @@ bool ProxyServer::initServer(RegKey &settings)
 	initHttpHandlers();
 	return true;
 }
+
+
+ProxyStringMap ProxyServer::JsonToProxy(const Json &json)
+{
+	ProxyStringMap proxy;
+	for (auto it : json.byObject())
+	{
+		proxy[(const char*)it.first] = (const char*)it.second;
+	}
+	return proxy;
+}
+
+Json ProxyServer::ProxyToJson(const ProxyStringMap &proxy)
+{
+	Json json;
+	for (auto it : proxy)
+	{
+		json[(const char*)it.first] = (const char*)it.second;
+	}
+	return json;
+}
+
+
