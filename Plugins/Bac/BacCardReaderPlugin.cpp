@@ -1,4 +1,5 @@
 #include "BacCardReaderPlugin.h"
+#include "EMVStreamWrapper.h"
 
 
 DEFINE_PROXY_PLUGIN(BacCardReaderPlugin)
@@ -6,12 +7,12 @@ DEFINE_PROXY_PLUGIN(BacCardReaderPlugin)
 
 BacCardReaderPlugin::BacCardReaderPlugin()
 {
-	m_pRequest = gcnew EMVStreamRequest();
 }
 
 
 void BacCardReaderPlugin::init(const ProxyStringMap &paramMap)
 {
+	m_request = gcnew EMVStreamRequestWrapper();
 }
 
 
@@ -20,21 +21,24 @@ void BacCardReaderPlugin::exit()
 }
 
 
-ProxyStringMap BacCardReaderPlugin::sendPayment(ProxyStringMap &request)
+ProxyStringMap BacCardReaderPlugin::sendPayment(ProxyStringMap &params)
+{
+	ProxyStringMap responseMap;
+
+	responseMap["data"] = m_request->sendPayment(params);
+
+	return responseMap;
+}
+
+
+ProxyStringMap BacCardReaderPlugin::sendRefund(ProxyStringMap &params)
 {
 	ProxyStringMap response;
 	return response;
 }
 
 
-ProxyStringMap BacCardReaderPlugin::sendRefund(ProxyStringMap &request)
-{
-	ProxyStringMap response;
-	return response;
-}
-
-
-ProxyStringMap BacCardReaderPlugin::settleTransactions(ProxyStringMap &settings)
+ProxyStringMap BacCardReaderPlugin::settleTransactions(ProxyStringMap &params)
 {
 	ProxyStringMap response;
 	return response;

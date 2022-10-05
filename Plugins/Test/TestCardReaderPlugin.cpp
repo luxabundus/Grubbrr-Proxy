@@ -11,11 +11,11 @@ ProxyString CreateTransactionId()
 	CoCreateGuid(&transactionId);
 
 	unsigned char *pUID = NULL;
-	UuidToString(&transactionId, &pUID);
+	UuidToStringA(&transactionId, &pUID);
 
 	ProxyString str((char*)pUID);
 
-	RpcStringFree(&pUID);
+	RpcStringFreeA(&pUID);
 
 	return str;
 }

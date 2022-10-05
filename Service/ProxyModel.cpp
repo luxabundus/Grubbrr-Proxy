@@ -80,10 +80,10 @@ ProxyPlugin *ProxyModel::loadPlugin(const String &pluginName, ProxyStringMap &pa
 	{
 		pPlugin = ProxyPlugin::Load(pluginName, pluginPath, params);
 	}
-	catch (ProxyPlugin::Exception &)
+	catch (ProxyPlugin::Exception &x)
 	{
-		AfxLogError("ProxyModel::loadPlugin@LoadPlugin(%s, %s)", pluginName, pluginPath);
-		throw;
+		AfxLogError(x.code, "ProxyModel::loadPlugin@LoadPlugin(%s, %s)", pluginName, pluginPath);
+		throw HttpException(HttpStatus::SERVER_ERROR, "error loading plug-in: %s", pluginName);
 	}
 
 	return pPlugin;

@@ -13,10 +13,6 @@ ProxyPlugin::ProxyPlugin() :
 
 ProxyPlugin::~ProxyPlugin()
 {
-	// 	if (m_hModule)
-	// 	{
-	// 		FreeLibrary(m_hModule);
-	// 	}
 }
 
 
