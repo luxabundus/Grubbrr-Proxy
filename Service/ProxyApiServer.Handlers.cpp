@@ -56,7 +56,7 @@ void ProxyApiServer::onSettle(HttpServerContext &context)
 		accessor,
 		apiRequest,
 		[](ProxyCardReaderPlugin &cardReader, ProxyStringMap &cardRequest) {
-			return cardReader.settleTransactions(cardRequest);
+			return cardReader.settlePayments(cardRequest);
 		}
 	);
 

@@ -12,9 +12,9 @@ public:
 
 	virtual ProxyStringMap sendPayment(ProxyStringMap &request);
 	virtual ProxyStringMap sendRefund(ProxyStringMap &request);
-	virtual ProxyStringMap settleTransactions(ProxyStringMap &settings);
+	virtual ProxyStringMap settlePayments(ProxyStringMap &settings);
 	virtual ProxyStringMap queryStatus();
 
 private:
-	gcroot<EMVStreamRequestWrapper^> m_request;
+	gcroot<EMVStreamRequestWrapper^> m_wrapper;
 };

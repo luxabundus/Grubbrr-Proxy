@@ -18,6 +18,7 @@ public:
 
 	bool operator == (const char *string) const;
 
+	operator char * ();
 	operator const char * () const;
 
 	bool empty() const;
@@ -96,6 +97,10 @@ inline bool ProxyString::operator == (const char *string) const
 	return std::strcmp(m_string ? m_string : "", string) == 0;
 }
 
+inline ProxyString::operator char * ()
+{
+	return m_string;
+}
 inline ProxyString::operator const char * () const
 {
 	return m_string;

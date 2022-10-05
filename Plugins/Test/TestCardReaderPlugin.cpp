@@ -97,7 +97,7 @@ ProxyStringMap TestCardReaderPlugin::sendRefund(ProxyStringMap &request)
 }
 
 
-ProxyStringMap TestCardReaderPlugin::settleTransactions(ProxyStringMap &settings)
+ProxyStringMap TestCardReaderPlugin::settlePayments(ProxyStringMap &settings)
 {
 	ProxyStringMap response;
 

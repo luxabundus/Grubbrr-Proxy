@@ -9,5 +9,5 @@ public:
 
 	virtual ProxyStringMap sendPayment(ProxyStringMap &request) = 0;
 	virtual ProxyStringMap sendRefund(ProxyStringMap &request) = 0;
-	virtual ProxyStringMap settleTransactions(ProxyStringMap &settings) = 0;
+	virtual ProxyStringMap settlePayments(ProxyStringMap &settings) = 0;
 };

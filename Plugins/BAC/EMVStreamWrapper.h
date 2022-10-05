@@ -15,7 +15,10 @@ using namespace CSP::EMV::InteropStream;
 ref class EMVStreamRequestWrapper
 {
 public:
-	ProxyString sendPayment(ProxyStringMap &params);
+	ProxyStringMap sendPayment(ProxyStringMap &params);
+	ProxyStringMap sendRefund(ProxyStringMap &params);
+	ProxyStringMap settlePayments(ProxyStringMap &params);
+	ProxyStringMap queryStatus();
 
 private:
 	EMVStreamRequest m_request;
