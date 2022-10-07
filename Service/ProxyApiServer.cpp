@@ -5,7 +5,6 @@
 ProxyApiServer::ProxyApiServer() :
 	ProxyServer("API")
 {
-	registerCorsOrigin("");
 }
 
 
@@ -15,6 +14,9 @@ bool ProxyApiServer::initServer(RegKey &settings)
 	{
 		return false;
 	}
+
+	enableCors(86400);
+	enableCorsCredentials();
 
 	String listener = settings.getStringValue("Listener");
 	if (listener.isEmpty())
