@@ -5,6 +5,7 @@
 ProxyApiServer::ProxyApiServer() :
 	ProxyServer("API")
 {
+	registerCorsOrigin("");
 }
 
 
@@ -25,7 +26,7 @@ bool ProxyApiServer::initServer(RegKey &settings)
 
 
 Json ProxyApiServer::execCardTransaction(
-	Accessor &accessor,
+	ApiAccessor &accessor,
 	Json &apiRequest,
 	std::function<ProxyStringMap(ProxyCardReaderPlugin&, ProxyStringMap&)> &&function)
 {
@@ -56,36 +57,13 @@ Json ProxyApiServer::execCardTransaction(
 
 
 
-ProxyApiServer::Accessor::Accessor(ProxyApiServer *pServer, HttpServerContext &context) :
-	m_pServer(pServer),
-	m_context(context)
+ProxyApiServer::ApiAccessor::ApiAccessor(ProxyApiServer *pServer, HttpServerContext &context) :
+	Accessor(pServer, context),
+	m_pServer(pServer)
 {
-	String user, password;
-	if (!m_context.request.getBasicAuth(user, password)
-		|| (user != "Grubbrr.Proxy.Api.Dev")
-		|| (password != "8TG$t37p!"))
-	{
-		m_context.response.throwBasicAuth("Grubbrr.Proxy.Dev");
-	}
 }
 
-Json ProxyApiServer::Accessor::getApiRequest(bool throwIfUndefined)
-{
-	Json apiRequest;
-	if ((!m_context.request.getContent(apiRequest) || apiRequest.isUndefined())
-		&& throwIfUndefined)
-	{
-		throw HttpException(HttpStatus::BAD_REQUEST);
-	}
-	return apiRequest;
-}
-
-void ProxyApiServer::Accessor::setApiResponse(Json &apiResponse)
-{
-	m_context.response.setContent(apiResponse);
-}
-
-ProxyTerminal &ProxyApiServer::Accessor::getTerminal(const String &terminalId)
+ProxyTerminal &ProxyApiServer::ApiAccessor::getTerminal(const String &terminalId)
 {
 	if (terminalId.isEmpty())
 	{
@@ -101,14 +79,14 @@ ProxyTerminal &ProxyApiServer::Accessor::getTerminal(const String &terminalId)
 	return *pTerminal;
 }
 
-ProxyCardReaderPlugin &ProxyApiServer::Accessor::getCardReader(const String &terminalId)
+ProxyCardReaderPlugin &ProxyApiServer::ApiAccessor::getCardReader(const String &terminalId)
 {
 	ProxyTerminal &terminal = getTerminal(terminalId);
 
 	ProxyCardReaderPlugin *pCardReader = terminal.getCardReader();
 	if (!pCardReader)
 	{
-		throw HttpException(HttpStatus::SERVER_ERROR, "undefined card-reader");
+		throw HttpException(HttpStatus::SERVER_ERROR, "undefined card-reader for terminal '%s'", terminalId);
 	}
 
 	return *pCardReader;

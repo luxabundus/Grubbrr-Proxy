@@ -12,11 +12,11 @@ END_HTTP_MAP()
 
 void ProxyApiServer::onPayment(HttpServerContext &context)
 {
-	Accessor accessor(this, context);
+	ApiAccessor accessor(this, context);
 
-	Json apiRequest = accessor.getApiRequest();
+	Json apiRequest = accessor.getRequest();
 
-	Json apiResponse = apiRequest;
+	Json apiResponse = apiRequest;	// echo request params
 	apiResponse["data"] = execCardTransaction(
 		accessor,
 		apiRequest,
@@ -25,16 +25,16 @@ void ProxyApiServer::onPayment(HttpServerContext &context)
 		}
 	);
 
-	accessor.setApiResponse(apiResponse);
+	accessor.setResponse(apiResponse);
 }
 
 void ProxyApiServer::onRefund(HttpServerContext &context)
 {
-	Accessor accessor(this, context);
+	ApiAccessor accessor(this, context);
 
-	Json apiRequest = accessor.getApiRequest();
+	Json apiRequest = accessor.getRequest();
 
-	Json apiResponse = apiRequest;
+	Json apiResponse = apiRequest;	// echo request params
 	apiResponse["data"] = execCardTransaction(
 		accessor,
 		apiRequest,
@@ -43,14 +43,14 @@ void ProxyApiServer::onRefund(HttpServerContext &context)
 		}
 	);
 
-	accessor.setApiResponse(apiResponse);
+	accessor.setResponse(apiResponse);
 }
 
 void ProxyApiServer::onSettle(HttpServerContext &context)
 {
-	Accessor accessor(this, context);
+	ApiAccessor accessor(this, context);
 
-	Json apiRequest = accessor.getApiRequest();
+	Json apiRequest = accessor.getRequest();
 
 	Json apiResponse = execCardTransaction(
 		accessor,
@@ -60,14 +60,14 @@ void ProxyApiServer::onSettle(HttpServerContext &context)
 		}
 	);
 
-	accessor.setApiResponse(apiResponse);
+	accessor.setResponse(apiResponse);
 }
 
 void ProxyApiServer::onStatus(HttpServerContext &context)
 {
-	Accessor accessor(this, context);
+	ApiAccessor accessor(this, context);
 
-	Json apiRequest = accessor.getApiRequest(false);
+	Json apiRequest = accessor.getRequest(false);
 	if (apiRequest.isUndefined())
 	{
 		apiRequest["terminalId"] = context.request.getQueryParam("terminalId");
@@ -81,5 +81,5 @@ void ProxyApiServer::onStatus(HttpServerContext &context)
 		}
 	);
 
-	accessor.setApiResponse(apiResponse);
+	accessor.setResponse(apiResponse);
 }

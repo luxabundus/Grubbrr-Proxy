@@ -1,7 +1,6 @@
 //{{NO_DEPENDENCIES}}
 // Microsoft Visual C++ generated include file.
-// Used by Grubbrr.Proxy.Bac.rc
-//
+// Used by Grubbrr.Proxy.Plugin.BAC.rc
 
 // Next default values for new objects
 // 

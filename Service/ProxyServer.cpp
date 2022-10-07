@@ -27,6 +27,18 @@ bool ProxyServer::init(ProxyModel &model)
 bool ProxyServer::initServer(RegKey &settings)
 {
 	initHttpHandlers();
+
+	if (!settings.getValue("AuthUser", m_authUser) && (AfxGetLastError() != ERROR_FILE_NOT_FOUND))
+	{
+		AfxLogLastError("ProxyServer::initServer@LoadAuthUser");
+		return false;
+	}
+	if (!settings.getValue("AuthPassword", m_authPassword) && (AfxGetLastError() != ERROR_FILE_NOT_FOUND))
+	{
+		AfxLogLastError("ProxyServer::initServer@LoadAuthPassword");
+		return false;
+	}
+
 	return true;
 }
 
@@ -52,3 +64,34 @@ Json ProxyServer::ProxyToJson(const ProxyStringMap &proxy)
 }
 
 
+ProxyServer::Accessor::Accessor(ProxyServer *pServer, HttpServerContext &context) :
+	m_context(context)
+{
+	String authUser, authPassword;
+	if (!pServer->m_authUser.isEmpty())
+	{
+		String reqUser, reqPassword;
+		if (!m_context.request.getBasicAuth(reqUser, reqPassword)
+			|| (pServer->m_authUser != reqUser)
+			|| (pServer->m_authPassword != reqPassword))
+		{
+			m_context.response.throwBasicAuth("Grubbrr.Proxy.Dev");
+		}
+	}
+}
+
+Json ProxyServer::Accessor::getRequest(bool throwIfUndefined)
+{
+	Json apiRequest;
+	if ((!m_context.request.getContent(apiRequest) || apiRequest.isUndefined())
+		&& throwIfUndefined)
+	{
+		throw HttpException(HttpStatus::BAD_REQUEST);
+	}
+	return apiRequest;
+}
+
+void ProxyServer::Accessor::setResponse(Json &apiResponse)
+{
+	m_context.response.setContent(apiResponse);
+}

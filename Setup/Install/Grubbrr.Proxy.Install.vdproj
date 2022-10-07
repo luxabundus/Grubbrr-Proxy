@@ -37,12 +37,6 @@
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_04615D65D67C4C9EA08A19B725C472BE"
-        "MsmSig" = "8:_UNDEFINED"
-        }
     }
     "Configurations"
     {
@@ -204,15 +198,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Proxy Service"
-        "ProductCode" = "8:{8590335B-3F90-40BE-AEE2-0B4609512881}"
-        "PackageCode" = "8:{D6303075-756E-42E9-A313-5E1980B677DF}"
+        "ProductCode" = "8:{6FB23360-6B66-4E3B-956F-3DC8B8719B40}"
+        "PackageCode" = "8:{2C77DB80-84D2-45F6-BB2F-152855D0A34B}"
         "UpgradeCode" = "8:{C70B8276-A636-4F84-915B-8CCD591357E8}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
-        "ProductVersion" = "8:0.0.6"
+        "ProductVersion" = "8:0.0.7"
         "Manufacturer" = "8:Grubbrr"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
