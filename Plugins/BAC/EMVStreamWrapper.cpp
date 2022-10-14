@@ -1,62 +1,54 @@
 #include "EMVStreamWrapper.h"
-#include <msclr/marshal.h>
 
-
-inline String^ _NetString(const ProxyString &proxyString)
+/*
+inline String^ _str(const ProxyString &proxyString)
 {
 	return gcnew String((const char*)proxyString);
 }
 
 
-ProxyStringMap EMVStreamRequestWrapper::sendPayment(ProxyStringMap &params)
+void EMVStreamRequestWrapper::init(const ProxyStringMap &params)
 {
-	msclr::interop::marshal_context ctx;
-
-	m_request.transactionType = "SALE";
-	m_request.terminalId = _NetString(params["terminalId"]);
-	m_request.totalAmount = _NetString(params["subTotal"]);
-	m_request.invoice = _NetString(params["orderId"]);
-
-	ProxyStringMap results;
-	results["xml"] = ctx.marshal_as<const char*>(m_request.sendData());
-	return results;
+	// Need code to initialize component and card-reader.
 }
 
 
-ProxyStringMap EMVStreamRequestWrapper::sendRefund(ProxyStringMap &params)
+String^ EMVStreamRequestWrapper::sendPayment(const ProxyStringMap &params)
 {
-	m_request.transactionType = "REFUND";
-	m_request.terminalId = _NetString(params["terminalId"]);
-	m_request.totalAmount = _NetString(params["subTotal"]);
-	m_request.invoice = _NetString(params["orderId"]);
-	m_request.authorizationNumber = _NetString(params["authId"]);
-
-	ProxyStringMap results;
-	msclr::interop::marshal_context ctx;
-	results["xml"] = ctx.marshal_as<const char*>(m_request.sendData());
-	return results;
+	EMVStreamRequest request;
+	request.transactionType = "SALE";
+	request.terminalId = _str(params["terminalId"]);
+	request.totalAmount = _str(params["subTotal"]);
+	request.invoice = _str(params["orderId"]);
+	return request.sendData();
 }
 
 
-ProxyStringMap EMVStreamRequestWrapper::settlePayments(ProxyStringMap &params)
+String^ EMVStreamRequestWrapper::sendRefund(const ProxyStringMap &params)
 {
-	m_request.transactionType = "BATCH_SETTLEMENT";
-	m_request.terminalId = _NetString(params["terminalId"]);
-
-	ProxyStringMap results;
-	msclr::interop::marshal_context ctx;
-	results["xml"] = ctx.marshal_as<const char*>(m_request.sendData());
-	return results;
+	EMVStreamRequest request;
+	request.transactionType = "REFUND";
+	request.terminalId = _str(params["terminalId"]);
+	request.totalAmount = _str(params["subTotal"]);
+	request.invoice = _str(params["orderId"]);
+	request.authorizationNumber = _str(params["authId"]);
+	return request.sendData();
 }
 
 
-ProxyStringMap EMVStreamRequestWrapper::queryStatus()
+String^ EMVStreamRequestWrapper::settlePayments(const ProxyStringMap &params)
 {
-	m_request.transactionType = "ECHO_TEST";
-
-	ProxyStringMap results;
-	msclr::interop::marshal_context ctx;
-	results["xml"] = ctx.marshal_as<const char*>(m_request.sendData());
-	return results;
+	EMVStreamRequest request;
+	request.transactionType = "BATCH_SETTLEMENT";
+	request.terminalId = _str(params["terminalId"]);
+	return request.sendData();
 }
 
+
+String^ EMVStreamRequestWrapper::queryStatus()
+{
+	EMVStreamRequest request;
+	request.transactionType = "ECHO_TEST";
+	return request.sendData();
+}
+*/

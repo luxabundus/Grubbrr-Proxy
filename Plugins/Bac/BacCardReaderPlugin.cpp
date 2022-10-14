@@ -1,5 +1,6 @@
 #include "BacCardReaderPlugin.h"
 #include "EMVStreamWrapper.h"
+#include <msclr\marshal.h>
 
 
 DEFINE_PROXY_PLUGIN(BacCardReaderPlugin)
@@ -10,9 +11,10 @@ BacCardReaderPlugin::BacCardReaderPlugin()
 }
 
 
-void BacCardReaderPlugin::init(const ProxyStringMap &paramMap)
+void BacCardReaderPlugin::init(const ProxyStringMap &params)
 {
 	m_wrapper = gcnew EMVStreamRequestWrapper();
+	m_wrapper->init(params);
 }
 
 
@@ -21,26 +23,38 @@ void BacCardReaderPlugin::exit()
 }
 
 
-ProxyStringMap BacCardReaderPlugin::sendPayment(ProxyStringMap &params)
+ProxyStringMap BacCardReaderPlugin::sendPayment(const ProxyStringMap &params)
 {
-	return m_wrapper->sendPayment(params);
+	ProxyStringMap results;
+	msclr::interop::marshal_context ctx;
+	results["xml"] = ctx.marshal_as<const char*>(m_wrapper->sendPayment(params));
+	return results;
 }
 
 
-ProxyStringMap BacCardReaderPlugin::sendRefund(ProxyStringMap &params)
+ProxyStringMap BacCardReaderPlugin::sendRefund(const ProxyStringMap &params)
 {
-	return m_wrapper->sendRefund(params);
+	ProxyStringMap results;
+	msclr::interop::marshal_context ctx;
+	results["xml"] = ctx.marshal_as<const char*>(m_wrapper->sendRefund(params));
+	return results;
 }
 
 
-ProxyStringMap BacCardReaderPlugin::settlePayments(ProxyStringMap &params)
+ProxyStringMap BacCardReaderPlugin::settlePayments(const ProxyStringMap &params)
 {
-	return m_wrapper->settlePayments(params);
+	ProxyStringMap results;
+	msclr::interop::marshal_context ctx;
+	results["xml"] = ctx.marshal_as<const char*>(m_wrapper->settlePayments(params));
+	return results;
 }
 
 
 ProxyStringMap BacCardReaderPlugin::queryStatus()
 {
-	return m_wrapper->queryStatus();
+	ProxyStringMap results;
+	msclr::interop::marshal_context ctx;
+	results["xml"] = ctx.marshal_as<const char*>(m_wrapper->queryStatus());
+	return results;
 }
 

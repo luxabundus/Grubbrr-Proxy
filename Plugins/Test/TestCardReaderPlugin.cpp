@@ -30,7 +30,7 @@ TestCardReaderPlugin::TestCardReaderPlugin()
 }
 
 
-void TestCardReaderPlugin::init(const ProxyStringMap &paramMap)
+void TestCardReaderPlugin::init(const ProxyStringMap &params)
 {
 }
 
@@ -40,17 +40,17 @@ void TestCardReaderPlugin::exit()
 }
 
 
-ProxyStringMap TestCardReaderPlugin::sendPayment(ProxyStringMap &request)
+ProxyStringMap TestCardReaderPlugin::sendPayment(const ProxyStringMap &params)
 {
 	ProxyStringMap response;
 
-	if (request["orderId"] == "111")
+	if (params["orderId"] == "111")
 	{
 		response["status"] = "rejected";
 		response["statusCode"] = "11";
 		response["statusMessage"] = "payment: expired";
 	}
-	else if (request["orderId"] == "222")
+	else if (params["orderId"] == "222")
 	{
 		response["status"] = "error";
 		response["statusCode"] = "99";
@@ -69,17 +69,17 @@ ProxyStringMap TestCardReaderPlugin::sendPayment(ProxyStringMap &request)
 }
 
 
-ProxyStringMap TestCardReaderPlugin::sendRefund(ProxyStringMap &request)
+ProxyStringMap TestCardReaderPlugin::sendRefund(const ProxyStringMap &params)
 {
 	ProxyStringMap response;
 
-	if (request["orderId"] == "111")
+	if (params["orderId"] == "111")
 	{
 		response["status"] = "rejected";
 		response["statusCode"] = "88";
 		response["statusMessage"] = "refund: unapproved";
 	}
-	else if (request["orderId"] == "222")
+	else if (params["orderId"] == "222")
 	{
 		response["status"] = "error";
 		response["statusCode"] = "99";
@@ -97,7 +97,7 @@ ProxyStringMap TestCardReaderPlugin::sendRefund(ProxyStringMap &request)
 }
 
 
-ProxyStringMap TestCardReaderPlugin::settlePayments(ProxyStringMap &settings)
+ProxyStringMap TestCardReaderPlugin::settlePayments(const ProxyStringMap &settings)
 {
 	ProxyStringMap response;
 
