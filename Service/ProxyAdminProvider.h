@@ -1,10 +1,10 @@
 #pragma once
 
 
-class ProxyAdminServer : public ProxyServer
+class ProxyAdminProvider : public ProxyProvider
 {
 public:
-	ProxyAdminServer();
+	ProxyAdminProvider();
 
 	bool initServer(RegKey &settings);
 

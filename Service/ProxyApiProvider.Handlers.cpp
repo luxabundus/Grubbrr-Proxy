@@ -1,8 +1,8 @@
 #include "pch.h"
-#include "ProxyApiServer.h"
+#include "ProxyApiProvider.h"
 
 
-BEGIN_HTTP_MAP(ProxyApiServer)
+BEGIN_HTTP_MAP(ProxyApiProvider)
 	ON_HTTP_METHOD("POST", "/payment", onPayment)
 	ON_HTTP_METHOD("POST", "/refund", onRefund)
 	ON_HTTP_METHOD("POST", "/settle", onSettle)
@@ -10,7 +10,7 @@ BEGIN_HTTP_MAP(ProxyApiServer)
 END_HTTP_MAP()
 
 
-void ProxyApiServer::onPayment(HttpServerContext &context)
+void ProxyApiProvider::onPayment(HttpServerContext &context)
 {
 	ApiAccessor accessor(this, context);
 
@@ -28,7 +28,7 @@ void ProxyApiServer::onPayment(HttpServerContext &context)
 	accessor.setResponse(apiResponse);
 }
 
-void ProxyApiServer::onRefund(HttpServerContext &context)
+void ProxyApiProvider::onRefund(HttpServerContext &context)
 {
 	ApiAccessor accessor(this, context);
 
@@ -46,7 +46,7 @@ void ProxyApiServer::onRefund(HttpServerContext &context)
 	accessor.setResponse(apiResponse);
 }
 
-void ProxyApiServer::onSettle(HttpServerContext &context)
+void ProxyApiProvider::onSettle(HttpServerContext &context)
 {
 	ApiAccessor accessor(this, context);
 
@@ -63,7 +63,7 @@ void ProxyApiServer::onSettle(HttpServerContext &context)
 	accessor.setResponse(apiResponse);
 }
 
-void ProxyApiServer::onStatus(HttpServerContext &context)
+void ProxyApiProvider::onStatus(HttpServerContext &context)
 {
 	ApiAccessor accessor(this, context);
 

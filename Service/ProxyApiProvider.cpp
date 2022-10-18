@@ -1,16 +1,16 @@
 #include "pch.h"
-#include "ProxyApiServer.h"
+#include "ProxyApiProvider.h"
 
 
-ProxyApiServer::ProxyApiServer() :
-	ProxyServer("API")
+ProxyApiProvider::ProxyApiProvider() :
+	ProxyProvider("API")
 {
 }
 
 
-bool ProxyApiServer::initServer(RegKey &settings)
+bool ProxyApiProvider::initServer(RegKey &settings)
 {
-	if (!ProxyServer::initServer(settings))
+	if (!ProxyProvider::initServer(settings))
 	{
 		return false;
 	}
@@ -27,7 +27,7 @@ bool ProxyApiServer::initServer(RegKey &settings)
 }
 
 
-Json ProxyApiServer::execCardTransaction(
+Json ProxyApiProvider::execCardTransaction(
 	ApiAccessor &accessor,
 	Json &apiRequest,
 	std::function<ProxyStringMap(ProxyCardReaderPlugin&, ProxyStringMap&)> &&function)
@@ -59,13 +59,13 @@ Json ProxyApiServer::execCardTransaction(
 
 
 
-ProxyApiServer::ApiAccessor::ApiAccessor(ProxyApiServer *pServer, HttpServerContext &context) :
+ProxyApiProvider::ApiAccessor::ApiAccessor(ProxyApiProvider *pServer, HttpServerContext &context) :
 	Accessor(pServer, context),
 	m_pServer(pServer)
 {
 }
 
-ProxyTerminal &ProxyApiServer::ApiAccessor::getTerminal(const String &terminalId)
+ProxyTerminal &ProxyApiProvider::ApiAccessor::getTerminal(const String &terminalId)
 {
 	if (terminalId.isEmpty())
 	{
@@ -81,7 +81,7 @@ ProxyTerminal &ProxyApiServer::ApiAccessor::getTerminal(const String &terminalId
 	return *pTerminal;
 }
 
-ProxyCardReaderPlugin &ProxyApiServer::ApiAccessor::getCardReader(const String &terminalId)
+ProxyCardReaderPlugin &ProxyApiProvider::ApiAccessor::getCardReader(const String &terminalId)
 {
 	ProxyTerminal &terminal = getTerminal(terminalId);
 

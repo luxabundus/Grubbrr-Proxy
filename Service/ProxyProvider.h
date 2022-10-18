@@ -1,10 +1,10 @@
 #pragma once
 
 
-class ProxyServer : public HttpServer
+class ProxyProvider : public HttpServer
 {
 public:
-	ProxyServer(const String &name);
+	ProxyProvider(const String &name);
 
 	String getName();
 	ProxyModel &getModel();
@@ -23,7 +23,7 @@ protected:
 	class Accessor
 	{
 	public:
-		Accessor(ProxyServer *pServer, HttpServerContext &context);
+		Accessor(ProxyProvider *pServer, HttpServerContext &context);
 
 		Json getRequest(bool throwIfUndefined = true);
 		void setResponse(Json &apiResponse);
@@ -41,12 +41,12 @@ private:
 };
 
 
-inline String ProxyServer::getName()
+inline String ProxyProvider::getName()
 {
 	return m_name;
 }
 
-inline ProxyModel &ProxyServer::getModel()
+inline ProxyModel &ProxyProvider::getModel()
 {
 	return *m_pModel;
 }

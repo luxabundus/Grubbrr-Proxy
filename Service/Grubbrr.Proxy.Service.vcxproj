@@ -152,21 +152,21 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="ProxyAdminServer.cpp" />
-    <ClCompile Include="ProxyApiServer.cpp" />
-    <ClCompile Include="ProxyApiServer.Handlers.cpp" />
+    <ClCompile Include="ProxyAdminProvider.cpp" />
+    <ClCompile Include="ProxyApiProvider.cpp" />
+    <ClCompile Include="ProxyApiProvider.Handlers.cpp" />
     <ClCompile Include="ProxyModel.cpp" />
     <ClCompile Include="ProxyRegKey.cpp" />
-    <ClCompile Include="ProxyServer.cpp" />
+    <ClCompile Include="ProxyProvider.cpp" />
     <ClCompile Include="ProxyTerminal.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
-    <ClInclude Include="ProxyAdminServer.h" />
-    <ClInclude Include="ProxyApiServer.h" />
+    <ClInclude Include="ProxyAdminProvider.h" />
+    <ClInclude Include="ProxyApiProvider.h" />
     <ClInclude Include="ProxyModel.h" />
     <ClInclude Include="ProxyRegKey.h" />
-    <ClInclude Include="ProxyServer.h" />
+    <ClInclude Include="ProxyProvider.h" />
     <ClInclude Include="ProxyTerminal.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>

@@ -1,6 +1,6 @@
 #include "pch.h"
-#include "ProxyApiServer.h"
-#include "ProxyAdminServer.h"
+#include "ProxyApiProvider.h"
+#include "ProxyAdminProvider.h"
 
 
 class GrubbrrProxyServiceApp : public ServiceApp
@@ -50,8 +50,8 @@ protected:
 
 private:
 	ProxyModel m_model;
-	ProxyApiServer m_api;
-	ProxyAdminServer m_admin;
+	ProxyApiProvider m_api;
+	ProxyAdminProvider m_admin;
 };
 
 GrubbrrProxyServiceApp theApp;

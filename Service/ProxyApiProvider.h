@@ -1,10 +1,10 @@
 #pragma once
 
 
-class ProxyApiServer : public ProxyServer
+class ProxyApiProvider : public ProxyProvider
 {
 public:
-	ProxyApiServer();
+	ProxyApiProvider();
 
 protected:
 	virtual bool initServer(RegKey &settings);
@@ -20,13 +20,13 @@ private:
 	class ApiAccessor : public Accessor
 	{
 	public:
-		ApiAccessor(ProxyApiServer *pServer, HttpServerContext &context);
+		ApiAccessor(ProxyApiProvider *pServer, HttpServerContext &context);
 
 		ProxyTerminal &getTerminal(const String &terminalId);
 		ProxyCardReaderPlugin &getCardReader(const String &terminalId);
 
 	private:
-		ProxyApiServer *m_pServer;
+		ProxyApiProvider *m_pServer;
 	};
 
 	Json execCardTransaction(

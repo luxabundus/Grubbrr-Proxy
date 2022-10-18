@@ -1,21 +1,21 @@
 #include "pch.h"
-#include "ProxyAdminServer.h"
+#include "ProxyAdminProvider.h"
 
 
-BEGIN_HTTP_MAP(ProxyAdminServer)
+BEGIN_HTTP_MAP(ProxyAdminProvider)
 	ON_HTTP_DEFAULT_FILE("/", "AdminUI", "admin.htm", "htm")
 END_HTTP_MAP()
 
 
-ProxyAdminServer::ProxyAdminServer() :
-	ProxyServer("Admin")
+ProxyAdminProvider::ProxyAdminProvider() :
+	ProxyProvider("Admin")
 {
 }
 
 
-bool ProxyAdminServer::initServer(RegKey &settings)
+bool ProxyAdminProvider::initServer(RegKey &settings)
 {
-	if (!ProxyServer::initServer(settings))
+	if (!ProxyProvider::initServer(settings))
 	{
 		return false;
 	}

@@ -1,22 +1,22 @@
 #include "pch.h"
-#include "ProxyServer.h"
+#include "ProxyProvider.h"
 
 
-ProxyServer::ProxyServer(const String &name) :
+ProxyProvider::ProxyProvider(const String &name) :
 	m_name(name),
 	m_pModel(nullptr)
 {
 }
 
 
-bool ProxyServer::init(ProxyModel &model)
+bool ProxyProvider::init(ProxyModel &model)
 {
 	m_pModel = &model;
 
 	RegKey settings;
 	if (!settings.open(HKEY_LOCAL_MACHINE, String("%s\\%s", ProxyRegKey::ROOT_KEY, m_name)))
 	{
-		AfxLogLastError("ProxyServer::init@OpenSettingsKey(%s)", m_name);
+		AfxLogLastError("ProxyProvider::init@OpenSettingsKey(%s)", m_name);
 		return false;
 	}
 
@@ -24,18 +24,18 @@ bool ProxyServer::init(ProxyModel &model)
 }
 
 
-bool ProxyServer::initServer(RegKey &settings)
+bool ProxyProvider::initServer(RegKey &settings)
 {
 	initHttpHandlers();
 
 	if (!settings.getValue("AuthUser", m_authUser) && (AfxGetLastError() != ERROR_FILE_NOT_FOUND))
 	{
-		AfxLogLastError("ProxyServer::initServer@LoadAuthUser");
+		AfxLogLastError("ProxyProvider::initServer@LoadAuthUser");
 		return false;
 	}
 	if (!settings.getValue("AuthPassword", m_authPassword) && (AfxGetLastError() != ERROR_FILE_NOT_FOUND))
 	{
-		AfxLogLastError("ProxyServer::initServer@LoadAuthPassword");
+		AfxLogLastError("ProxyProvider::initServer@LoadAuthPassword");
 		return false;
 	}
 
@@ -43,7 +43,7 @@ bool ProxyServer::initServer(RegKey &settings)
 }
 
 
-ProxyStringMap ProxyServer::JsonToProxy(const Json &json)
+ProxyStringMap ProxyProvider::JsonToProxy(const Json &json)
 {
 	ProxyStringMap proxy;
 	for (auto it : json.byObject())
@@ -53,7 +53,7 @@ ProxyStringMap ProxyServer::JsonToProxy(const Json &json)
 	return proxy;
 }
 
-Json ProxyServer::ProxyToJson(const ProxyStringMap &proxy)
+Json ProxyProvider::ProxyToJson(const ProxyStringMap &proxy)
 {
 	Json json;
 	for (auto it : proxy)
@@ -64,7 +64,7 @@ Json ProxyServer::ProxyToJson(const ProxyStringMap &proxy)
 }
 
 
-ProxyServer::Accessor::Accessor(ProxyServer *pServer, HttpServerContext &context) :
+ProxyProvider::Accessor::Accessor(ProxyProvider *pServer, HttpServerContext &context) :
 	m_context(context)
 {
 	String authUser, authPassword;
@@ -80,7 +80,7 @@ ProxyServer::Accessor::Accessor(ProxyServer *pServer, HttpServerContext &context
 	}
 }
 
-Json ProxyServer::Accessor::getRequest(bool throwIfUndefined)
+Json ProxyProvider::Accessor::getRequest(bool throwIfUndefined)
 {
 	Json apiRequest;
 	if ((!m_context.request.getContent(apiRequest) || apiRequest.isUndefined())
@@ -91,7 +91,7 @@ Json ProxyServer::Accessor::getRequest(bool throwIfUndefined)
 	return apiRequest;
 }
 
-void ProxyServer::Accessor::setResponse(Json &apiResponse)
+void ProxyProvider::Accessor::setResponse(Json &apiResponse)
 {
 	m_context.response.setContent(apiResponse);
 }

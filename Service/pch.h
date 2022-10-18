@@ -10,4 +10,4 @@ class ProxyTerminal;
 #include "ProxyRegKey.h"
 #include "ProxyTerminal.h"
 #include "ProxyModel.h"
-#include "ProxyServer.h"
+#include "ProxyProvider.h"

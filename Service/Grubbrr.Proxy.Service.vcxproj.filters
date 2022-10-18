@@ -24,7 +24,7 @@
     <ClCompile Include="pch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ProxyApiServer.Handlers.cpp">
+    <ClCompile Include="ProxyApiProvider.Handlers.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ProxyModel.cpp">
@@ -33,16 +33,16 @@
     <ClCompile Include="ProxyRegKey.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ProxyServer.cpp">
+    <ClCompile Include="ProxyProvider.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ProxyTerminal.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ProxyAdminServer.cpp">
+    <ClCompile Include="ProxyAdminProvider.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ProxyApiServer.cpp">
+    <ClCompile Include="ProxyApiProvider.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -56,16 +56,16 @@
     <ClInclude Include="ProxyRegKey.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ProxyServer.h">
+    <ClInclude Include="ProxyProvider.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ProxyTerminal.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ProxyAdminServer.h">
+    <ClInclude Include="ProxyAdminProvider.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ProxyApiServer.h">
+    <ClInclude Include="ProxyApiProvider.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="resource.h">
