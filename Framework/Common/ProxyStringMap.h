@@ -5,13 +5,18 @@ class GRUBBRR_PROXY_COMMON_DECLSPEC ProxyStringMap
 {
 	using Entry = std::pair<ProxyString, ProxyString>;
 	using EntryVector = std::vector<Entry>;
-	using KeyMap = std::map<const char*, size_t>;
+	using KeyMap = std::map<ProxyString, size_t>;
 
 public:
 	ProxyStringMap();
 	ProxyStringMap(ProxyStringMap &&origin) noexcept;
 	ProxyStringMap(const ProxyStringMap &origin);
 	virtual ~ProxyStringMap();
+
+	size_t size() const
+	{
+		return m_pEntries->size();
+	}
 
 	ProxyString operator [] (const char *pKey) const;
 	ProxyString &operator [] (const char *pKey);

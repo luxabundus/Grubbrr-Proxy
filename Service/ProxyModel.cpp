@@ -28,6 +28,7 @@ bool ProxyModel::init()
 	if (AfxGetSessionId()) // running in a dev instance, i.e. under a user session.
 	{
 		m_pluginRootPath = AfxCanonicalizePath(m_pluginRootPath + DEV_PLUGIN_DIR);
+		AfxSetCurrentDirectory(m_pluginRootPath);
 	}
 
 	return true;

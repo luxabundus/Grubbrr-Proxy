@@ -185,27 +185,20 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="CSP.EMV.InteropStream.dll">
-      <DeploymentContent>true</DeploymentContent>
-    </None>
-    <None Include="Ijwhost.dll">
-      <DeploymentContent>true</DeploymentContent>
-    </None>
-    <None Include="libeay32.dll">
-      <DeploymentContent>true</DeploymentContent>
-    </None>
-    <None Include="msvcp140.dll">
-      <DeploymentContent>true</DeploymentContent>
-    </None>
-    <None Include="ssleay32.dll">
-      <DeploymentContent>true</DeploymentContent>
-    </None>
-    <None Include="vcruntime140.dll">
-      <DeploymentContent>true</DeploymentContent>
-    </None>
+    <ResourceCompile Include="Grubbrr.Proxy.Plugin.BAC.rc" />
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="Grubbrr.Proxy.Plugin.BAC.rc" />
+    <None Include="Runtime\CSP.EMV.Background.exe" />
+    <None Include="Runtime\CSP.EMV.DeviceSetting.exe" />
+    <None Include="Runtime\CSP.EMV.InteropEXE.exe" />
+    <None Include="Runtime\CSP.EMV.InteropStream.dll" />
+    <None Include="Runtime\Example EMV Acople Client.exe" />
+    <None Include="Runtime\Example EMV Acople Client.exe.config" />
+    <None Include="Runtime\libeay32.dll" />
+    <None Include="Runtime\LocalConfiguration\apiParam.dat" />
+    <None Include="Runtime\msvcp140.dll" />
+    <None Include="Runtime\ssleay32.dll" />
+    <None Include="Runtime\vcruntime140.dll" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,12 +1,16 @@
-/Setup/Install/Release
-/Setup/Install/Debug
 /Service/Output
 /Service/Build
 /.vs
-/Setup/Install/setup.exe
-/Setup/Install/Grubbrr.Proxy.msi
 /Service/Grubbrr.Proxy.Service.aps
 /Plugins/Bac/Build
 /Framework/Common/Build
 /Plugins/Test/Build
 /Framework/Common/Grubbrr.Proxy.Common.aps
+/Setup/Production/Release
+/Setup/Production/Debug
+/Setup/Production/setup.exe
+/Setup/Production/Grubbrr.Proxy.msi
+/Plugins/BAC/Runtime/Ijwhost.dll
+/Plugins/BAC/Runtime/LocalConfiguration/merchant-TESTIN10.dat
+/Plugins/BAC/Runtime/Example EMV Acople Client.exe.config
+/Plugins/BAC/Runtime/Example EMV Acople Client.exe

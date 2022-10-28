@@ -16,6 +16,7 @@ public:
 	ProxyString &operator = (const char *origin);
 	ProxyString &operator = (const std::string &origin);
 
+	bool operator < (const char *string) const;
 	bool operator == (const char *string) const;
 
 	operator char * ();
@@ -90,6 +91,11 @@ inline ProxyString &ProxyString::operator = (const std::string &string)
 {
 	copy(string.data());
 	return *this;
+}
+
+inline bool ProxyString::operator < (const char *string) const
+{
+	return std::strcmp(m_string ? m_string : "", string) < 0;
 }
 
 inline bool ProxyString::operator == (const char *string) const

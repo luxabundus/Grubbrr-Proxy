@@ -4,7 +4,7 @@
 #include <msclr\auto_gcroot.h>
 #include <Common\Includes.h>
 
-#using "CSP.EMV.InteropStream.dll"
+#using "Runtime\CSP.EMV.InteropStream.dll"
 
 using namespace System;
 using namespace System::Reflection;

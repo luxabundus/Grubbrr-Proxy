@@ -85,7 +85,7 @@
     <None Include="AdminUI\admin.css">
       <Filter>AdminUI Files</Filter>
     </None>
-    <None Include="..\Setup\Install\Grubbrr.Proxy.vsdx" />
+    <None Include="..\Setup\Production\Grubbrr.Proxy.vsdx" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Grubbrr.Proxy.Service.rc">

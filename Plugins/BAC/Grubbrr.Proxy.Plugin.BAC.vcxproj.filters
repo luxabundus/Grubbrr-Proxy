@@ -13,8 +13,11 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Binary Files">
+    <Filter Include="Runtime Files">
       <UniqueIdentifier>{9247baac-55f7-4c0f-8b2c-6a7e5f3c3da9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Runtime Files\LocalConfiguration">
+      <UniqueIdentifier>{1fbf15e4-f7ef-4249-9f43-4f05a3776a2f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -40,28 +43,43 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Ijwhost.dll">
-      <Filter>Binary Files</Filter>
-    </None>
-    <None Include="libeay32.dll">
-      <Filter>Binary Files</Filter>
-    </None>
-    <None Include="msvcp140.dll">
-      <Filter>Binary Files</Filter>
-    </None>
-    <None Include="ssleay32.dll">
-      <Filter>Binary Files</Filter>
-    </None>
-    <None Include="vcruntime140.dll">
-      <Filter>Binary Files</Filter>
-    </None>
-    <None Include="CSP.EMV.InteropStream.dll">
-      <Filter>Binary Files</Filter>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
     <ResourceCompile Include="Grubbrr.Proxy.Plugin.BAC.rc">
       <Filter>Resource Files</Filter>
     </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Runtime\Example EMV Acople Client.exe">
+      <Filter>Runtime Files</Filter>
+    </None>
+    <None Include="Runtime\Example EMV Acople Client.exe.config">
+      <Filter>Runtime Files</Filter>
+    </None>
+    <None Include="Runtime\libeay32.dll">
+      <Filter>Runtime Files</Filter>
+    </None>
+    <None Include="Runtime\msvcp140.dll">
+      <Filter>Runtime Files</Filter>
+    </None>
+    <None Include="Runtime\ssleay32.dll">
+      <Filter>Runtime Files</Filter>
+    </None>
+    <None Include="Runtime\vcruntime140.dll">
+      <Filter>Runtime Files</Filter>
+    </None>
+    <None Include="Runtime\CSP.EMV.Background.exe">
+      <Filter>Runtime Files</Filter>
+    </None>
+    <None Include="Runtime\CSP.EMV.DeviceSetting.exe">
+      <Filter>Runtime Files</Filter>
+    </None>
+    <None Include="Runtime\CSP.EMV.InteropEXE.exe">
+      <Filter>Runtime Files</Filter>
+    </None>
+    <None Include="Runtime\CSP.EMV.InteropStream.dll">
+      <Filter>Runtime Files</Filter>
+    </None>
+    <None Include="Runtime\LocalConfiguration\apiParam.dat">
+      <Filter>Runtime Files\LocalConfiguration</Filter>
+    </None>
   </ItemGroup>
 </Project>
