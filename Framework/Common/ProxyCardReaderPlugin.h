@@ -7,7 +7,8 @@ class GRUBBRR_PROXY_COMMON_DECLSPEC ProxyCardReaderPlugin : public ProxyPlugin
 public:
 	ProxyCardReaderPlugin();
 
-	virtual ProxyStringMap sendPayment(const ProxyStringMap &request) = 0;
-	virtual ProxyStringMap sendRefund(const ProxyStringMap &request) = 0;
-	virtual ProxyStringMap settlePayments(const ProxyStringMap &settings) = 0;
+	virtual void sendPayment(Transaction &transaction) = 0;
+	virtual void sendRefund(Transaction &transaction) = 0;
+	virtual void sendVoid(Transaction &transaction) = 0;
+	virtual void settlePayments(Transaction &transaction) = 0;
 };

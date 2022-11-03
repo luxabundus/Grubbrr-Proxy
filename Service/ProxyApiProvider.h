@@ -11,26 +11,38 @@ protected:
 
 	DECLARE_HTTP_MAP()
 
-	void onPayment(HttpServerContext &context);
-	void onRefund(HttpServerContext &context);
-	void onSettle(HttpServerContext &context);
-	void onStatus(HttpServerContext &context);
+	void onCardStatus(HttpServerContext &context);
+	void onCardPayment(HttpServerContext &context);
+	void onCardRefund(HttpServerContext &context);
+	void onCardVoid(HttpServerContext &context);
+	void onCardSettlement(HttpServerContext &context);
 
 private:
-	class ApiAccessor : public Accessor
+	class ApiAccessor : public AccessorBase
 	{
 	public:
 		ApiAccessor(ProxyApiProvider *pServer, HttpServerContext &context);
-
-		ProxyTerminal &getTerminal(const String &terminalId);
-		ProxyCardReaderPlugin &getCardReader(const String &terminalId);
 
 	private:
 		ProxyApiProvider *m_pServer;
 	};
 
+	ProxyTerminal &getTerminal(const String &terminalId);
+	ProxyCardReaderPlugin &getCardReader(const String &terminalId);
+
+	void validateRequestParam(const Json &apiRequest, const char *fieldName);
+	void validateSaleRequest(const Json &apiRequest);
+
 	Json execCardTransaction(
-		ApiAccessor &accessor,
 		Json &apiRequest,
-		std::function<ProxyStringMap(ProxyCardReaderPlugin&, ProxyStringMap&)> &&function);
+		std::function<void(ProxyCardReaderPlugin&, ProxyCardReaderPlugin::Transaction&)> &&function);
 };
+
+
+
+inline ProxyApiProvider::ApiAccessor::ApiAccessor(ProxyApiProvider *pServer, HttpServerContext &context) :
+	AccessorBase(pServer, context),
+	m_pServer(pServer)
+{
+}
+

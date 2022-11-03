@@ -9,10 +9,33 @@
 DEFINE_PROXY_PLUGIN(BacCardReaderPlugin)
 
 
+static inline String^ _str(const ProxyString &proxyString)
+{
+	return proxyString ? gcnew String((const char*)proxyString) : nullptr;
+}
+
 static inline ProxyString _prxstr(String ^source)
 {
 	msclr::interop::marshal_context ctx;
 	return ctx.marshal_as<const char*>(source);
+}
+
+static inline XmlDocument ^_xml(String ^wrapperResult)
+{
+	XmlDocument ^xml = gcnew XmlDocument;
+	xml->LoadXml(wrapperResult);
+	return xml;
+}
+
+static inline ProxyString _xmlstr(XmlNode ^xml, const char *name)
+{
+	ProxyString str;
+	XmlNode ^node = xml->SelectSingleNode(String::Format("/EMVStreamResponse/{0}", _str(name)));
+	if (node)
+	{
+		str = _prxstr(node->InnerText);
+	}
+	return str;
 }
 
 
@@ -24,7 +47,6 @@ BacCardReaderPlugin::BacCardReaderPlugin()
 
 void BacCardReaderPlugin::init(const ProxyStringMap &params)
 {
-	m_wrapper = gcnew EMVStreamRequestWrapper();
 }
 
 void BacCardReaderPlugin::exit()
@@ -34,7 +56,10 @@ void BacCardReaderPlugin::exit()
 
 void BacCardReaderPlugin::queryStatus(Transaction &transaction)
 {
-	XmlDocument ^result = m_wrapper->queryStatus();
+	EMVStreamRequest request;
+	request.transactionType = "ECHO_TEST";
+
+	XmlDocument ^result = _xml(request.sendData());
 
 	getResponseStatus(transaction, result);
 
@@ -44,27 +69,34 @@ void BacCardReaderPlugin::queryStatus(Transaction &transaction)
 
 void BacCardReaderPlugin::sendPayment(Transaction &transaction)
 {
-	prepareSaleRequest(transaction);
+	EMVStreamRequest ^request = gcnew EMVStreamRequest;
+	request->transactionType = "SALE";
+	request->terminalId = _str(transaction.requestData["terminalId"]);
+	request->invoice = _str(transaction.requestData["orderId"]);
+	request->totalAmount = _str(transaction.requestData["totalAmount"]);
 
-	XmlDocument ^result = m_wrapper->sendPayment(transaction);
+	XmlDocument ^result = _xml(request->sendData());
 
 	getResponseStatus(transaction, result);
 
-	getXmlValue(transaction.resultData, "transactionId", result, "transactionId");
-	getXmlValue(transaction.resultData, "referenceNumber", result, "referenceNumber");
-	getXmlValue(transaction.resultData, "systemTraceNumber", result, "systemTraceNumber");
-
-	// Extract card-scheme.
-	getXmlValue(transaction.resultData, "cardNumber", result, "maskedCardNumber");
-
-	XmlNode ^printInfo = result->SelectSingleNode(String::Format("/printTags"));
-	if (printInfo)
+	if (transaction.statusCode == "00")
 	{
-		msclr::interop::marshal_context ctx;
-		transaction.resultData["cardScheme"] = _prxstr(printInfo->FirstChild->InnerText);
-	}
+		transaction.resultData["transactionId"].format(
+			"%s:%s:%s",
+			_xmlstr(result, "authorizationNumber"),
+			_xmlstr(result, "referenceNumber"),
+			_xmlstr(result, "systemTraceNumber")
+		);
 
-	transaction.resultData["raw"] = _prxstr(result->OuterXml);
+		transaction.resultData["cardNumber"] = _xmlstr(result, "maskedCardNumber");
+
+		XmlNode ^printInfo = result->SelectSingleNode(_str("/printTags"));
+		if (printInfo)
+		{
+			msclr::interop::marshal_context ctx;
+			transaction.resultData["cardScheme"] = _prxstr(printInfo->FirstChild->InnerText);
+		}
+	}
 }
 
 

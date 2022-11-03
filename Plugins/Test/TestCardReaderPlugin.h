@@ -9,9 +9,11 @@ public:
 	virtual void init(const ProxyStringMap &params);
 	virtual void exit();
 
-	virtual ProxyStringMap sendPayment(const ProxyStringMap &params);
-	virtual ProxyStringMap sendRefund(const ProxyStringMap &params);
-	virtual ProxyStringMap settlePayments(const ProxyStringMap &params);
-	virtual ProxyStringMap queryStatus();
+	virtual void queryStatus(Transaction &transactions);
+
+	virtual void sendPayment(Transaction &transactions);
+	virtual void sendRefund(Transaction &transactions);
+	virtual void sendVoid(Transaction &transactions);
+	virtual void settlePayments(Transaction &transactions);
 };
 

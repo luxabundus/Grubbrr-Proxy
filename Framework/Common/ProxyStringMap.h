@@ -21,12 +21,9 @@ public:
 	ProxyString operator [] (const char *pKey) const;
 	ProxyString &operator [] (const char *pKey);
 
-// 	struct iterator : std::vector<Entry>::iterator
-// 	{
-// 	};
-// 	struct const_iterator : std::vector<Entry>::const_iterator
-// 	{
-// 	};
+	ProxyStringMap &operator = (ProxyStringMap &&origin);
+	ProxyStringMap &operator = (const ProxyStringMap &origin);
+
 	using iterator = std::vector<Entry>::iterator;
 	using const_iterator = std::vector<Entry>::const_iterator;
 	iterator begin();
@@ -56,4 +53,16 @@ inline ProxyStringMap::ProxyStringMap(ProxyStringMap &&origin) noexcept
 inline ProxyStringMap::ProxyStringMap(const ProxyStringMap &origin)
 {
 	copy(origin);
+}
+
+inline ProxyStringMap &ProxyStringMap::operator = (ProxyStringMap &&origin)
+{
+	move(origin);
+	return *this;
+}
+
+inline ProxyStringMap &ProxyStringMap::operator = (const ProxyStringMap &origin)
+{
+	copy(origin);
+	return *this;
 }

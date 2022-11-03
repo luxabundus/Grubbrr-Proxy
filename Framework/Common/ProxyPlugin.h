@@ -16,13 +16,22 @@ public:
 		template <typename... Args> Exception(int code, const char *format, Args&...args);
 	};
 
+	struct Transaction
+	{
+		ProxyString status;
+		ProxyString statusCode;
+		ProxyString statusMessage;
+		ProxyStringMap requestData;
+		ProxyStringMap resultData;
+	};
+
 	ProxyPlugin();
 	virtual ~ProxyPlugin();
 
 	virtual void init(const ProxyStringMap &paramMap) = 0;
 	virtual void exit() = 0;
 
-	virtual ProxyStringMap queryStatus() = 0;
+	virtual void queryStatus(Transaction &transaction) = 0;
 
 	static ProxyPlugin *Load(const char *className, const char *filePath, ProxyStringMap &configParams);
 	static void Unload(ProxyPlugin *pPlugin);

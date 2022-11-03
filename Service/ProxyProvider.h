@@ -18,12 +18,10 @@ protected:
 	static Json ProxyToJson(const ProxyStringMap &proxy);
 
 protected:
-	friend class ApiAccessor;
-
-	class Accessor
+	class AccessorBase
 	{
 	public:
-		Accessor(ProxyProvider *pServer, HttpServerContext &context);
+		AccessorBase(ProxyProvider *pProvider, HttpServerContext &context);
 
 		Json getRequest(bool throwIfUndefined = true);
 		void setResponse(Json &apiResponse);

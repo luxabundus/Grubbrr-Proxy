@@ -40,80 +40,88 @@ void TestCardReaderPlugin::exit()
 }
 
 
-ProxyStringMap TestCardReaderPlugin::sendPayment(const ProxyStringMap &params)
+void TestCardReaderPlugin::queryStatus(Transaction &transactions)
 {
-	ProxyStringMap response;
+	transactions.resultData["status"] = "online";
+}
 
-	if (params["orderId"] == "111")
+
+void TestCardReaderPlugin::sendPayment(Transaction &transaction)
+{
+	if (transaction.requestData["orderId"] == "111")
 	{
-		response["status"] = "rejected";
-		response["statusCode"] = "11";
-		response["statusMessage"] = "payment: expired";
+		transaction.status = "rejected";
+		transaction.statusCode = "11";
+		transaction.statusMessage = "payment: expired";
 	}
-	else if (params["orderId"] == "222")
+	else if (transaction.requestData["orderId"] == "222")
 	{
-		response["status"] = "error";
-		response["statusCode"] = "99";
-		response["statusMessage"] = "payment: connection error";
+		transaction.status = "error";
+		transaction.statusCode = "99";
+		transaction.statusMessage = "payment: connection error";
 	}
 	else
 	{
-		response["status"] = "success";
-		response["statusCode"] = "00";
-		response["statusMessage"] = "payment: success";
-		response["transactionId"] = CreateTransactionId();
-		response["cardScheme"] = "VISA";
+		transaction.status = "success";
+		transaction.statusCode = "00";
+		transaction.statusMessage = "payment: success";
+		transaction.resultData["transactionId"] = CreateTransactionId();
+		transaction.resultData["cardScheme"] = "VISA";
 	}
-
-	return response;
 }
 
 
-ProxyStringMap TestCardReaderPlugin::sendRefund(const ProxyStringMap &params)
+void TestCardReaderPlugin::sendRefund(Transaction &transaction)
 {
-	ProxyStringMap response;
-
-	if (params["orderId"] == "111")
+	if (transaction.requestData["orderId"] == "111")
 	{
-		response["status"] = "rejected";
-		response["statusCode"] = "88";
-		response["statusMessage"] = "refund: unapproved";
+		transaction.status = "rejected";
+		transaction.statusCode = "88";
+		transaction.statusMessage = "refund: unapproved";
 	}
-	else if (params["orderId"] == "222")
+	else if (transaction.requestData["orderId"] == "222")
 	{
-		response["status"] = "error";
-		response["statusCode"] = "99";
-		response["statusMessage"] = "refund: connection error";
+		transaction.status = "error";
+		transaction.statusCode = "99";
+		transaction.statusMessage = "refund: connection error";
 	}
 	else
 	{
-		response["status"] = "success";
-		response["statusCode"] = "00";
-		response["statusMessage"] = "refund: success";
-		response["transactionId"] = CreateTransactionId();
+		transaction.status = "success";
+		transaction.statusCode = "00";
+		transaction.statusMessage = "refund: success";
+		transaction.resultData["transactionId"] = CreateTransactionId();
 	}
-
-	return response;
 }
 
 
-ProxyStringMap TestCardReaderPlugin::settlePayments(const ProxyStringMap &settings)
+void TestCardReaderPlugin::sendVoid(Transaction &transaction)
 {
-	ProxyStringMap response;
-
-	response["status"] = "success";
-	response["statusCode"] = "00";
-	response["statusMessage"] = "settle: success";
-
-	return response;
+	if (transaction.requestData["orderId"] == "111")
+	{
+		transaction.status = "rejected";
+		transaction.statusCode = "88";
+		transaction.statusMessage = "void: unapproved";
+	}
+	else if (transaction.requestData["orderId"] == "222")
+	{
+		transaction.status = "error";
+		transaction.statusCode = "99";
+		transaction.statusMessage = "void: connection error";
+	}
+	else
+	{
+		transaction.status = "success";
+		transaction.statusCode = "00";
+		transaction.statusMessage = "void: success";
+		transaction.resultData["transactionId"] = CreateTransactionId();
+	}
 }
 
 
-ProxyStringMap TestCardReaderPlugin::queryStatus()
+void TestCardReaderPlugin::settlePayments(Transaction &transaction)
 {
-	ProxyStringMap response;
-
-	response["status"] = "online";
-
-	return response;
+	transaction.status = "success";
+	transaction.statusCode = "00";
+	transaction.statusMessage = "settle: success";
 }

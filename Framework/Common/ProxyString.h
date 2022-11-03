@@ -9,6 +9,7 @@ public:
 	ProxyString(const ProxyString &origin);
 	ProxyString(const char *origin);
 	ProxyString(const std::string &origin);
+	template <typename... Args>	ProxyString(const char *fmt, const Args&... args);
 	~ProxyString();
 
 	ProxyString &operator = (ProxyString &&origin) noexcept;
@@ -25,7 +26,7 @@ public:
 	bool empty() const;
 	const char *data() const;
 
-	template<typename ...Args> ProxyString &format(const char *fmt, Args &... args);
+	template <typename... Args> inline ProxyString &format(const char *fmt, const Args&... args);
 
 private:
 	char *m_string;
@@ -61,6 +62,13 @@ inline ProxyString::ProxyString(const std::string &origin) :
 	m_string(nullptr)
 {
 	copy(origin.data());
+}
+
+template <typename... Args>
+inline ProxyString::ProxyString(const char *fmt, const Args&... args) :
+	m_string(nullptr)
+{
+	format(fmt, args...);
 }
 
 inline ProxyString::~ProxyString()
@@ -123,14 +131,27 @@ inline const char *ProxyString::data() const
 }
 
 
-template<typename ...Args>
-ProxyString &ProxyString::format(const char *fmt, Args &... args)
+template <typename T>
+inline T __ProxyFormatArg(T value)
 {
-	size_t length = snprintf(nullptr, 0, fmt, args ...);
+	return value;
+}
+inline char const *__ProxyFormatArg(ProxyString const &value)
+{
+	return value.data();
+}
+template <typename... Args>
+inline ProxyString &ProxyString::format(const char *fmt, const Args&... args)
+{
+	delete[] m_string;
+	m_string = nullptr;
+
+	size_t length = snprintf(nullptr, 0, fmt, __ProxyFormatArg(args) ...);
 	if (length != 0)
 	{
 		m_string = new char[length + 1];
-		snprintf(m_string, length + 1, fmt, args ...);
+		snprintf(m_string, length + 1, fmt, __ProxyFormatArg(args) ...);
 	}
+
 	return *this;
 }

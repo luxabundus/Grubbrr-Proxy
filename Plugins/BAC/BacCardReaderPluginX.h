@@ -21,7 +21,9 @@ private:
 
 	void validateRequestData(Transaction &transaction, const char *fieldName);
 
-	void prepareSaleRequest(Transaction &transaction);
+	EMVStreamRequest ^createEmvRequest(const char *type, Transaction &transaction);
+
+	void prepareSaleRequest(Transaction &transaction, );
 	void getResponseStatus(Transaction &transaction, XmlDocument ^result);
 	bool getXmlValue(ProxyString &value, XmlDocument ^xml, String ^xmlName);
 	bool getXmlValue(ProxyStringMap &response, const char *respName, XmlDocument ^xml, String ^xmlName);

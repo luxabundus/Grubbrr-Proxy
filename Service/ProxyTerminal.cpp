@@ -32,7 +32,8 @@ void ProxyTerminal::exit()
 ProxyPlugin *ProxyTerminal::initPlugin(ProxyModel &model, const String &pluginType)
 {
 	ProxyRegKey settings;
-	if (!settings.open(HKEY_LOCAL_MACHINE, String("%s\\%s\\%s", ProxyRegKey::TERMINAL_ROOT_KEY, m_terminalId, pluginType)))
+	if (!settings.open(HKEY_LOCAL_MACHINE, String("%s\\%s\\%s", ProxyRegKey::TERMINAL_ROOT_KEY, m_terminalId, pluginType))
+		&& !settings.open(HKEY_LOCAL_MACHINE, String("%s\\*\\%s", ProxyRegKey::TERMINAL_ROOT_KEY, pluginType)))
 	{
 		throw HttpException(HttpStatus::SERVER_ERROR, "undefined plug-in type: %s", pluginType);
 	}

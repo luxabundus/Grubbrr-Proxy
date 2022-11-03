@@ -52,7 +52,7 @@ ProxyTerminal *ProxyModel::lookupTerminal(const String &terminalId)
 	else
 	{
 		ProxyRegKey terminalKey;
-		if (terminalKey.open(HKEY_LOCAL_MACHINE, ProxyRegKey::TERMINAL_ROOT_KEY + "\\" + terminalId))
+		if (terminalKey.open(HKEY_LOCAL_MACHINE, ProxyRegKey::TERMINAL_ROOT_KEY + "\\" + terminalId) || (AfxGetLastError() == ERROR_FILE_NOT_FOUND))
 		{
 			pTerminal = new ProxyTerminal(terminalId);
 			pTerminal->init(*this);

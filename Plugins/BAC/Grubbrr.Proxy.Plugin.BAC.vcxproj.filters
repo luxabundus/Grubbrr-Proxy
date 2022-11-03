@@ -48,12 +48,6 @@
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Runtime\Example EMV Acople Client.exe">
-      <Filter>Runtime Files</Filter>
-    </None>
-    <None Include="Runtime\Example EMV Acople Client.exe.config">
-      <Filter>Runtime Files</Filter>
-    </None>
     <None Include="Runtime\libeay32.dll">
       <Filter>Runtime Files</Filter>
     </None>

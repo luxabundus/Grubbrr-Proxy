@@ -21,58 +21,73 @@ bool ProxyApiProvider::initServer(RegKey &settings)
 	String listener = settings.getStringValue("Listener");
 	if (listener.isEmpty())
 	{
-		listener = "tcp:localhost:5432";
+		listener = "tcp:0.0.0.0:5432";
 	}
+
 	return startListener(listener);
 }
 
 
-Json ProxyApiProvider::execCardTransaction(
-	ApiAccessor &accessor,
-	Json &apiRequest,
-	std::function<ProxyStringMap(ProxyCardReaderPlugin&, ProxyStringMap&)> &&function)
+void ProxyApiProvider::validateRequestParam(const Json &apiRequest, const char *fieldName)
 {
-	Json apiResponse;
+	if (!apiRequest.hasProperty(fieldName))
+	{
+		throw HttpException(HttpStatus::BAD_REQUEST, "Missing %s", fieldName);
+	}
+}
+
+void ProxyApiProvider::validateSaleRequest(const Json &apiRequest)
+{
+	validateRequestParam(apiRequest, "terminalId");
+	validateRequestParam(apiRequest, "orderId");
+	validateRequestParam(apiRequest, "totalAmount");
+}
+
+
+Json ProxyApiProvider::execCardTransaction(
+	Json &apiRequest,
+	std::function<void(ProxyCardReaderPlugin&, ProxyCardReaderPlugin::Transaction&)> &&function)
+{
+	Json apiResponse = apiRequest;	// Start with echo of request params.
 
 	String terminalId = apiRequest["terminalId"];
-	if (terminalId.isEmpty())
-	{
-		terminalId = "000";
-	}
-
-	ProxyCardReaderPlugin &cardReader = accessor.getCardReader(terminalId);
+	ProxyCardReaderPlugin &cardReader = getCardReader(terminalId);
 
 	try
 	{
-		ProxyStringMap cardRequest = JsonToProxy(apiRequest);
-		ProxyStringMap cardResponse = function(cardReader, cardRequest);
+		ProxyCardReaderPlugin::Transaction transaction;
+		transaction.requestData = JsonToProxy(apiRequest);
 
-		apiResponse = ProxyToJson(cardResponse);
+		function(cardReader, transaction);
+
+		Json &apiResult = apiResponse["result"] = Json::TYPE::Object;
+
+		apiResult["status"] = (const char*)transaction.status;
+		apiResult["statusCode"] = (const char*)transaction.statusCode;
+
+		if (!transaction.statusMessage.empty())
+		{
+			apiResult["statusMessage"] = (const char*)transaction.statusMessage;
+		}
+
+		apiResult["data"] = ProxyToJson(transaction.resultData);
 	}
 	catch (ProxyPlugin::Exception &x)
 	{
-		throw HttpException(HttpStatus::SERVER_ERROR, "(%d) %s", x.code, x.message);
+		throw HttpException(x.code, x.message);
 	}
 
 	return apiResponse;
 }
 
-
-
-ProxyApiProvider::ApiAccessor::ApiAccessor(ProxyApiProvider *pServer, HttpServerContext &context) :
-	Accessor(pServer, context),
-	m_pServer(pServer)
-{
-}
-
-ProxyTerminal &ProxyApiProvider::ApiAccessor::getTerminal(const String &terminalId)
+ProxyTerminal &ProxyApiProvider::getTerminal(const String &terminalId)
 {
 	if (terminalId.isEmpty())
 	{
 		throw HttpException(HttpStatus::BAD_REQUEST, "missing terminal-id");
 	}
 
-	ProxyTerminal *pTerminal = m_pServer->getModel().lookupTerminal(terminalId);
+	ProxyTerminal *pTerminal = getModel().lookupTerminal(terminalId);
 	if (!pTerminal)
 	{
 		throw HttpException(HttpStatus::BAD_REQUEST, "unknown terminal-id: %s", terminalId);
@@ -81,7 +96,7 @@ ProxyTerminal &ProxyApiProvider::ApiAccessor::getTerminal(const String &terminal
 	return *pTerminal;
 }
 
-ProxyCardReaderPlugin &ProxyApiProvider::ApiAccessor::getCardReader(const String &terminalId)
+ProxyCardReaderPlugin &ProxyApiProvider::getCardReader(const String &terminalId)
 {
 	ProxyTerminal &terminal = getTerminal(terminalId);
 

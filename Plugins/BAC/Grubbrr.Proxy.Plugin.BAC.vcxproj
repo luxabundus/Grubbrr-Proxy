@@ -192,8 +192,6 @@
     <None Include="Runtime\CSP.EMV.DeviceSetting.exe" />
     <None Include="Runtime\CSP.EMV.InteropEXE.exe" />
     <None Include="Runtime\CSP.EMV.InteropStream.dll" />
-    <None Include="Runtime\Example EMV Acople Client.exe" />
-    <None Include="Runtime\Example EMV Acople Client.exe.config" />
     <None Include="Runtime\libeay32.dll" />
     <None Include="Runtime\LocalConfiguration\apiParam.dat" />
     <None Include="Runtime\msvcp140.dll" />

@@ -3,83 +3,101 @@
 
 
 BEGIN_HTTP_MAP(ProxyApiProvider)
-	ON_HTTP_METHOD("POST", "/payment", onPayment)
-	ON_HTTP_METHOD("POST", "/refund", onRefund)
-	ON_HTTP_METHOD("POST", "/settle", onSettle)
-	ON_HTTP_METHOD("GET,POST", "/status", onStatus)
+	ON_HTTP_METHOD("GET,POST", "/card/status", onCardStatus)
+	ON_HTTP_METHOD("POST", "/card/payment", onCardPayment)
+	ON_HTTP_METHOD("POST", "/card/refund", onCardRefund)
+	ON_HTTP_METHOD("POST", "/card/void", onCardVoid)
+	ON_HTTP_METHOD("POST", "/card/settlement", onCardSettlement)
 END_HTTP_MAP()
 
 
-void ProxyApiProvider::onPayment(HttpServerContext &context)
+void ProxyApiProvider::onCardStatus(HttpServerContext &context)
 {
 	ApiAccessor accessor(this, context);
-
-	Json apiRequest = accessor.getRequest();
-
-	Json apiResponse = apiRequest;	// echo request params
-	apiResponse["data"] = execCardTransaction(
-		accessor,
-		apiRequest,
-		[](ProxyCardReaderPlugin &cardReader, ProxyStringMap &cardRequest) {
-			return cardReader.sendPayment(cardRequest);
-		}
-	);
-
-	accessor.setResponse(apiResponse);
-}
-
-void ProxyApiProvider::onRefund(HttpServerContext &context)
-{
-	ApiAccessor accessor(this, context);
-
-	Json apiRequest = accessor.getRequest();
-
-	Json apiResponse = apiRequest;	// echo request params
-	apiResponse["data"] = execCardTransaction(
-		accessor,
-		apiRequest,
-		[](ProxyCardReaderPlugin &cardReader, ProxyStringMap &cardRequest) {
-			return cardReader.sendRefund(cardRequest);
-		}
-	);
-
-	accessor.setResponse(apiResponse);
-}
-
-void ProxyApiProvider::onSettle(HttpServerContext &context)
-{
-	ApiAccessor accessor(this, context);
-
-	Json apiRequest = accessor.getRequest();
-
-	Json apiResponse = execCardTransaction(
-		accessor,
-		apiRequest,
-		[](ProxyCardReaderPlugin &cardReader, ProxyStringMap &cardRequest) {
-			return cardReader.settlePayments(cardRequest);
-		}
-	);
-
-	accessor.setResponse(apiResponse);
-}
-
-void ProxyApiProvider::onStatus(HttpServerContext &context)
-{
-	ApiAccessor accessor(this, context);
-
 	Json apiRequest = accessor.getRequest(false);
-	if (apiRequest.isUndefined())
-	{
-		apiRequest["terminalId"] = context.request.getQueryParam("terminalId");
-	}
+
+	validateRequestParam(apiRequest, "terminalId");
 
 	Json apiResponse = execCardTransaction(
-		accessor,
 		apiRequest,
-		[](ProxyCardReaderPlugin &cardReader, ProxyStringMap &cardRequest) {
-			return cardReader.queryStatus();
+		[](ProxyCardReaderPlugin &cardReader, ProxyCardReaderPlugin::Transaction &transaction) {
+			cardReader.queryStatus(transaction);
 		}
 	);
 
-	accessor.setResponse(apiResponse);
+	context.response.setContent(apiResponse);
+}
+
+
+void ProxyApiProvider::onCardPayment(HttpServerContext &context)
+{
+	ApiAccessor accessor(this, context);
+	Json apiRequest = accessor.getRequest();
+
+	validateSaleRequest(apiRequest);
+
+	Json apiResponse = execCardTransaction(
+		apiRequest,
+		[](ProxyCardReaderPlugin &cardReader, ProxyCardReaderPlugin::Transaction &transaction) {
+			cardReader.sendPayment(transaction);
+		}
+	);
+
+	context.response.setContent(apiResponse);
+}
+
+
+void ProxyApiProvider::onCardRefund(HttpServerContext &context)
+{
+	ApiAccessor accessor(this, context);
+	Json apiRequest = accessor.getRequest();
+
+	validateSaleRequest(apiRequest);
+	validateRequestParam(apiRequest, "transactionId");
+
+	Json apiResponse = execCardTransaction(
+		apiRequest,
+		[](ProxyCardReaderPlugin &cardReader, ProxyCardReaderPlugin::Transaction &transaction) {
+			cardReader.sendRefund(transaction);
+		}
+	);
+
+	context.response.setContent(apiResponse);
+}
+
+
+void ProxyApiProvider::onCardVoid(HttpServerContext &context)
+{
+	ApiAccessor accessor(this, context);
+	Json apiRequest = accessor.getRequest();
+
+	validateSaleRequest(apiRequest);
+	validateRequestParam(apiRequest, "transactionId");
+
+	Json apiResponse = execCardTransaction(
+		apiRequest,
+		[](ProxyCardReaderPlugin &cardReader, ProxyCardReaderPlugin::Transaction &transaction) {
+			cardReader.sendVoid(transaction);
+		}
+	);
+
+	context.response.setContent(apiResponse);
+}
+
+
+void ProxyApiProvider::onCardSettlement(HttpServerContext &context)
+{
+	ApiAccessor accessor(this, context);
+	Json apiRequest = accessor.getRequest();
+
+	validateRequestParam(apiRequest, "terminalId");
+
+	Json apiResponse = execCardTransaction(
+		apiRequest,
+		[](ProxyCardReaderPlugin &cardReader, ProxyCardReaderPlugin::Transaction &transaction) {
+			cardReader.settlePayments(transaction);
+		}
+	);
+
+	context.response.setContent(apiResponse);
 }

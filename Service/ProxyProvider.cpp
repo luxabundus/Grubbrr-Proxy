@@ -64,23 +64,23 @@ Json ProxyProvider::ProxyToJson(const ProxyStringMap &proxy)
 }
 
 
-ProxyProvider::Accessor::Accessor(ProxyProvider *pServer, HttpServerContext &context) :
+ProxyProvider::AccessorBase::AccessorBase(ProxyProvider *pProvider, HttpServerContext &context) :
 	m_context(context)
 {
 	String authUser, authPassword;
-	if (!pServer->m_authUser.isEmpty())
+	if (!pProvider->m_authUser.isEmpty())
 	{
 		String reqUser, reqPassword;
 		if (!m_context.request.getBasicAuth(reqUser, reqPassword)
-			|| (pServer->m_authUser != reqUser)
-			|| (pServer->m_authPassword != reqPassword))
+			|| (pProvider->m_authUser != reqUser)
+			|| (pProvider->m_authPassword != reqPassword))
 		{
 			m_context.response.throwBasicAuth("Grubbrr.Proxy.Dev");
 		}
 	}
 }
 
-Json ProxyProvider::Accessor::getRequest(bool throwIfUndefined)
+Json ProxyProvider::AccessorBase::getRequest(bool throwIfUndefined)
 {
 	Json apiRequest;
 	if ((!m_context.request.getContent(apiRequest) || apiRequest.isUndefined())
@@ -91,7 +91,7 @@ Json ProxyProvider::Accessor::getRequest(bool throwIfUndefined)
 	return apiRequest;
 }
 
-void ProxyProvider::Accessor::setResponse(Json &apiResponse)
+void ProxyProvider::AccessorBase::setResponse(Json &apiResponse)
 {
 	m_context.response.setContent(apiResponse);
 }
