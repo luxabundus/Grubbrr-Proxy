@@ -10,5 +10,5 @@ public:
 	virtual void sendPayment(Transaction &transaction) = 0;
 	virtual void sendRefund(Transaction &transaction) = 0;
 	virtual void sendVoid(Transaction &transaction) = 0;
-	virtual void settlePayments(Transaction &transaction) = 0;
+	virtual void sendSettlement(Transaction &transaction) = 0;
 };

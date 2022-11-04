@@ -81,7 +81,7 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_FB665293D6CD44FFA78A5196DC47E8D5"
+        "MsmKey" = "8:_D9F7DAB1007541CEA73ED533674E57A7"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -367,6 +367,26 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_D9F7DAB1007541CEA73ED533674E57A7"
+            {
+            "SourcePath" = "8:..\\..\\Plugins\\BAC\\Runtime\\CSP.EMV.DeviceSetting.exe"
+            "TargetName" = "8:CSP.EMV.DeviceSetting.exe"
+            "Tag" = "8:"
+            "Folder" = "8:_DC52DA418FCE474FB735ED2C2E97523B"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
         }
         "FileType"
         {
@@ -433,16 +453,16 @@
         "Product"
         {
         "Name" = "8:Microsoft Visual Studio"
-        "ProductName" = "8:Proxy Service"
-        "ProductCode" = "8:{B9D13764-316F-4D1E-B02B-356A389D7CBA}"
-        "PackageCode" = "8:{70E41CFC-34C6-477D-966C-9922F4F23F0E}"
+        "ProductName" = "8:Grubbrr Proxy Service"
+        "ProductCode" = "8:{11398A4B-2499-4B66-8061-C475EAD9BEFB}"
+        "PackageCode" = "8:{EAC16B8C-D7CA-411C-9635-5328887765BD}"
         "UpgradeCode" = "8:{C70B8276-A636-4F84-915B-8CCD591357E8}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
-        "ProductVersion" = "8:0.0.9"
+        "ProductVersion" = "8:0.1.0"
         "Manufacturer" = "8:Grubbrr"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
@@ -1160,34 +1180,6 @@
                 {
                 }
             }
-            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_E4A7970E4A8447A7B35B069010E00298"
-            {
-            "SourcePath" = "8:"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_DC52DA418FCE474FB735ED2C2E97523B"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            "ProjectOutputGroupRegister" = "3:1"
-            "OutputConfiguration" = "8:"
-            "OutputGroupCanonicalName" = "8:ContentFiles"
-            "OutputProjectGuid" = "8:{30557C1C-D9BE-436C-9906-2CB870FF38D4}"
-            "ShowKeyOutput" = "11:TRUE"
-                "ExcludeFilters"
-                {
-                }
-            }
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_E9C386301B3143D8B6E5BE1FF5536672"
             {
             "SourcePath" = "8:"
@@ -1211,34 +1203,6 @@
             "OutputConfiguration" = "8:"
             "OutputGroupCanonicalName" = "8:ContentFiles"
             "OutputProjectGuid" = "8:{6261B116-31D2-4189-8E29-A4D48172F14C}"
-            "ShowKeyOutput" = "11:TRUE"
-                "ExcludeFilters"
-                {
-                }
-            }
-            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_FB665293D6CD44FFA78A5196DC47E8D5"
-            {
-            "SourcePath" = "8:..\\..\\..\\Output\\Release\\Win32\\Grubbrr.Proxy.Plugin.Test.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_DC52DA418FCE474FB735ED2C2E97523B"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            "ProjectOutputGroupRegister" = "3:1"
-            "OutputConfiguration" = "8:"
-            "OutputGroupCanonicalName" = "8:Built"
-            "OutputProjectGuid" = "8:{30557C1C-D9BE-436C-9906-2CB870FF38D4}"
             "ShowKeyOutput" = "11:TRUE"
                 "ExcludeFilters"
                 {

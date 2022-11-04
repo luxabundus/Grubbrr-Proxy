@@ -12,8 +12,7 @@ public:
 
 		Exception(Exception &&origin) noexcept;
 		Exception(const Exception &origin);
-
-		template <typename... Args> Exception(int code, const char *format, Args&...args);
+		Exception(int code, const ProxyString &message);
 	};
 
 	struct Transaction
@@ -53,12 +52,12 @@ inline ProxyPlugin::Exception::Exception(const Exception &origin) :
 {
 }
 
-template <typename... Args>
-inline ProxyPlugin::Exception::Exception(int _code, const char *fmt, Args&...args) :
-	code(_code)
+inline ProxyPlugin::Exception::Exception(int _code, const ProxyString &_message) :
+	code(_code),
+	message(_message)
 {
-	message.format(fmt, args...);
 }
+
 
 
 #define DEFINE_PROXY_PLUGIN(ClassName) \

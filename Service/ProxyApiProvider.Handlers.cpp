@@ -38,7 +38,8 @@ void ProxyApiProvider::onCardPayment(HttpServerContext &context)
 
 	Json apiResponse = execCardTransaction(
 		apiRequest,
-		[](ProxyCardReaderPlugin &cardReader, ProxyCardReaderPlugin::Transaction &transaction) {
+		[this](ProxyCardReaderPlugin &cardReader, ProxyCardReaderPlugin::Transaction &transaction) mutable {
+			reformatTotalAmount(transaction);
 			cardReader.sendPayment(transaction);
 		}
 	);
@@ -71,7 +72,7 @@ void ProxyApiProvider::onCardVoid(HttpServerContext &context)
 	ApiAccessor accessor(this, context);
 	Json apiRequest = accessor.getRequest();
 
-	validateSaleRequest(apiRequest);
+	validateRequestParam(apiRequest, "terminalId");
 	validateRequestParam(apiRequest, "transactionId");
 
 	Json apiResponse = execCardTransaction(
@@ -95,7 +96,7 @@ void ProxyApiProvider::onCardSettlement(HttpServerContext &context)
 	Json apiResponse = execCardTransaction(
 		apiRequest,
 		[](ProxyCardReaderPlugin &cardReader, ProxyCardReaderPlugin::Transaction &transaction) {
-			cardReader.settlePayments(transaction);
+			cardReader.sendSettlement(transaction);
 		}
 	);
 

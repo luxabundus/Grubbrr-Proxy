@@ -1,18 +1,30 @@
 #include "BacCardReaderPlugin.h"
 #include <msclr\marshal.h>
-#include "EMVStreamWrapper.h"
-
-
-#define HTTP_STATUS_BAD_REQUEST 400
 
 
 DEFINE_PROXY_PLUGIN(BacCardReaderPlugin)
 
 
+static inline String^ _str(const ProxyString &proxyString)
+{
+	return proxyString ? gcnew String((const char*)proxyString) : nullptr;
+}
+
 static inline ProxyString _prxstr(String ^source)
 {
 	msclr::interop::marshal_context ctx;
 	return ctx.marshal_as<const char*>(source);
+}
+
+static inline String ^_xmlstr(XmlNode ^xml, const char *name)
+{
+	XmlNode ^node = xml->SelectSingleNode(String::Format("/EMVStreamResponse/{0}", _str(name)));
+	return node ? node->InnerText->Trim() : nullptr;
+}
+
+static inline ProxyString _xmlprxstr(XmlNode ^xml, const char *name)
+{
+	return _prxstr(_xmlstr(xml, name));
 }
 
 
@@ -24,7 +36,6 @@ BacCardReaderPlugin::BacCardReaderPlugin()
 
 void BacCardReaderPlugin::init(const ProxyStringMap &params)
 {
-	m_wrapper = gcnew EMVStreamRequestWrapper();
 }
 
 void BacCardReaderPlugin::exit()
@@ -34,135 +45,149 @@ void BacCardReaderPlugin::exit()
 
 void BacCardReaderPlugin::queryStatus(Transaction &transaction)
 {
-	XmlDocument ^result = m_wrapper->queryStatus();
+	EMVStreamRequest ^request = gcnew EMVStreamRequest;
+	request->transactionType = "ECHO_TEST";
 
-	getResponseStatus(transaction, result);
+	XmlDocument ^result = execute(transaction, request);
 
 	transaction.resultData["raw"] = _prxstr(result->OuterXml);
 }
-
 
 void BacCardReaderPlugin::sendPayment(Transaction &transaction)
 {
-	prepareSaleRequest(transaction);
+	EMVStreamRequest ^request = gcnew EMVStreamRequest;
+	request->transactionType = "SALE";
+	request->terminalId = _str(transaction.requestData["terminalId"]);
+	request->invoice = _str(transaction.requestData["orderId"]);
+	request->totalAmount = _str(transaction.requestData["totalAmount"]);
 
-	XmlDocument ^result = m_wrapper->sendPayment(transaction);
+	XmlDocument ^result = execute(transaction, request);
 
-	getResponseStatus(transaction, result);
-
-	getXmlValue(transaction.resultData, "transactionId", result, "transactionId");
-	getXmlValue(transaction.resultData, "referenceNumber", result, "referenceNumber");
-	getXmlValue(transaction.resultData, "systemTraceNumber", result, "systemTraceNumber");
-
-	// Extract card-scheme.
-	getXmlValue(transaction.resultData, "cardNumber", result, "maskedCardNumber");
-
-	XmlNode ^printInfo = result->SelectSingleNode(String::Format("/printTags"));
-	if (printInfo)
+	if (transaction.statusCode == "00")
 	{
-		msclr::interop::marshal_context ctx;
-		transaction.resultData["cardScheme"] = _prxstr(printInfo->FirstChild->InnerText);
+		transaction.resultData["transactionId"] = formatTransactionId(result);
+		transaction.resultData["cardNumber"] = _xmlprxstr(result, "maskedCardNumber");
+		transaction.resultData["cardScheme"] = _xmlprxstr(result, "/printTags/string");
+	}
+	else
+	{
+		reverse(transaction);
 	}
 
 	transaction.resultData["raw"] = _prxstr(result->OuterXml);
 }
-
 
 void BacCardReaderPlugin::sendRefund(Transaction &transaction)
 {
-	validateRequestData(transaction, "transactionId");
+	EMVStreamRequest ^request = gcnew EMVStreamRequest;
+	request->transactionType = "REFUND";
+	request->terminalId = _str(transaction.requestData["terminalId"]);
+	request->invoice = _str(transaction.requestData["orderId"]);
+	request->totalAmount = _str(transaction.requestData["totalAmount"]);
 
-	prepareSaleRequest(transaction);
+	parseTransactionId(transaction.requestData["transactionId"], request);
 
-	XmlDocument ^result = m_wrapper->sendRefund(transaction);
+	XmlDocument ^result = execute(transaction, request);
 
-	getResponseStatus(transaction, result);
-
-	getXmlValue(transaction.resultData, "cardHolder", result, "cardHolderName");
+	if (transaction.statusCode == "00")
+	{
+		transaction.resultData["transactionId"] = formatTransactionId(result);
+	}
+	else
+	{
+		reverse(transaction);
+	}
 
 	transaction.resultData["raw"] = _prxstr(result->OuterXml);
 }
-
 
 void BacCardReaderPlugin::sendVoid(Transaction &transaction)
 {
-	validateRequestData(transaction, "transactionId");
+	EMVStreamRequest ^request = gcnew EMVStreamRequest;
+	request->transactionType = "VOID";
+	request->terminalId = _str(transaction.requestData["terminalId"]);
 
-	prepareSaleRequest(transaction);
+	parseTransactionId(transaction.requestData["transactionId"], request);
 
-	XmlDocument ^result = m_wrapper->sendVoid(transaction);
+	XmlDocument ^result = execute(transaction, request);
 
-	getResponseStatus(transaction, result);
+	if (transaction.statusCode == "00")
+	{
+		transaction.resultData["transactionId"] = formatTransactionId(result);
+	}
+	else
+	{
+		reverse(transaction);
+	}
 
-	getXmlValue(transaction.resultData, "cardHolder", result, "cardHolderName");
+	transaction.resultData["raw"] = _prxstr(result->OuterXml);
+}
+
+void BacCardReaderPlugin::sendSettlement(Transaction &transaction)
+{
+	EMVStreamRequest ^request = gcnew EMVStreamRequest;
+	request->transactionType = "BATCH_SETTLEMENT";
+	request->terminalId = _str(transaction.requestData["terminalId"]);
+
+	XmlDocument ^result = execute(transaction, request);
 
 	transaction.resultData["raw"] = _prxstr(result->OuterXml);
 }
 
 
-void BacCardReaderPlugin::settlePayments(Transaction &transaction)
+XmlDocument ^BacCardReaderPlugin::execute(Transaction &transaction, EMVStreamRequest ^request)
 {
-	XmlDocument ^result = m_wrapper->settlePayments(transaction);
+	XmlDocument ^result = gcnew XmlDocument;
+	result->LoadXml(request->sendData());
 
-	getResponseStatus(transaction, result);
-
-	transaction.resultData["raw"] = _prxstr(result->OuterXml);
-}
-
-
-void BacCardReaderPlugin::validateRequestData(Transaction &transaction, const char *fieldName)
-{
-	if (!transaction.requestData.contains(fieldName))
-	{
-		throw Exception(HTTP_STATUS_BAD_REQUEST, "missing request field: %s", fieldName);
-	}
-}
-
-void BacCardReaderPlugin::prepareSaleRequest(Transaction &transaction)
-{
-	double totalAmount = atof(transaction.requestData["totalAmount"]);
-
-	double divisor = atof(transaction.requestData["divisor"]);
-	if (!divisor)
-	{
-		divisor = 1;
-	}
-
-	transaction.requestData["totalAmount"].format("%0.2f", totalAmount / divisor);
-}
-
-
-void BacCardReaderPlugin::getResponseStatus(Transaction &transaction, XmlDocument ^result)
-{
-	ProxyStringMap response;
- 	getXmlValue(transaction.status, result, "responseCodeDescription");
+	getXmlValue(transaction.status, result, "responseCodeDescription");
 	getXmlValue(transaction.statusCode, result, "responseCode");
 	getXmlValue(transaction.statusMessage, result, "errorDescription");
 
-	getXmlValue(transaction.resultData, "transactionId", result, "transactionId");
-	getXmlValue(transaction.resultData, "referenceNumber", result, "referenceNumber");
-	getXmlValue(transaction.resultData, "systemTraceNumber", result, "systemTraceNumber");
+	return result;
 }
 
-
-bool BacCardReaderPlugin::getXmlValue(ProxyString &value, XmlDocument ^xml, String ^xmlName)
+void BacCardReaderPlugin::reverse(const Transaction &transaction)
 {
-	XmlNode ^node = xml->SelectSingleNode(String::Format("/EMVStreamResponse/{0}", xmlName));
+	EMVStreamRequest ^request = gcnew EMVStreamRequest;
+	request->transactionType = "REVERSE";
+	request->terminalId = _str(transaction.requestData["terminalId"]);
+	request->invoice = _str(transaction.requestData["orderId"]);
+	request->sendData();
+}
+
+ProxyString BacCardReaderPlugin::formatTransactionId(XmlNode ^xml)
+{
+	return _prxstr(String::Format("{0}-{1}-{2}", _xmlstr(xml, "authorizationNumber"), _xmlstr(xml, "referenceNumber"), _xmlstr(xml, "systemTraceNumber")));
+}
+
+void BacCardReaderPlugin::parseTransactionId(const ProxyString &transactionId, EMVStreamRequest ^request)
+{
+ 	array<String^> ^elements = _str(transactionId)->Split('-');
+
+	if (elements)
+	{
+		if (elements->Length >= 1)
+		{
+			request->authorizationNumber = elements[0];
+		}
+		if (elements->Length >= 2)
+		{
+			request->referenceNumber = elements[1];
+		}
+		if (elements->Length >= 3)
+		{
+			request->systemTraceNumber = elements[2];
+		}
+	}
+}
+
+bool BacCardReaderPlugin::getXmlValue(ProxyString &value, XmlDocument ^xml, const char *xmlName)
+{
+	XmlNode ^node = xml->SelectSingleNode(String::Format("/EMVStreamResponse/{0}", _str(xmlName)));
 	if (node)
 	{
 		value = _prxstr(node->InnerText);
-		return true;
-	}
-
-	return false;
-}
-
-bool BacCardReaderPlugin::getXmlValue(ProxyStringMap &response, const char *respName, XmlDocument ^xml, String ^xmlName)
-{
-	XmlNode ^node = xml->SelectSingleNode(String::Format("/EMVStreamResponse/{0}", xmlName));
-	if (node)
-	{
-		response[respName] = _prxstr(node->InnerText);
 		return true;
 	}
 

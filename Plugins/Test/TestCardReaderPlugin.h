@@ -14,6 +14,6 @@ public:
 	virtual void sendPayment(Transaction &transactions);
 	virtual void sendRefund(Transaction &transactions);
 	virtual void sendVoid(Transaction &transactions);
-	virtual void settlePayments(Transaction &transactions);
+	virtual void sendSettlement(Transaction &transactions);
 };
 

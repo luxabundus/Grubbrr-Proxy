@@ -1,5 +1,16 @@
 #pragma once
-#include "EMVStreamWrapper.h"
+
+#include <vcclr.h>
+#include <msclr\auto_gcroot.h>
+#include <Common\Includes.h>
+
+#using <System.Xml.dll>
+#using "Runtime\CSP.EMV.InteropStream.dll"
+
+using namespace System;
+using namespace System::Reflection;
+using namespace System::Xml;
+using namespace CSP::EMV::InteropStream;
 
 
 class BacCardReaderPlugin : public ProxyCardReaderPlugin
@@ -14,15 +25,13 @@ public:
 	virtual void sendPayment(Transaction &transaction);
 	virtual void sendRefund(Transaction &transaction);
 	virtual void sendVoid(Transaction &transaction);
-	virtual void settlePayments(Transaction &transaction);
+	virtual void sendSettlement(Transaction &transaction);
 
 private:
-	gcroot<EMVStreamRequestWrapper^> m_wrapper;
+	XmlDocument ^execute(Transaction &transaction, EMVStreamRequest ^request);
+	void reverse(const Transaction &transaction);
 
-	void validateRequestData(Transaction &transaction, const char *fieldName);
-
-	void prepareSaleRequest(Transaction &transaction);
-	void getResponseStatus(Transaction &transaction, XmlDocument ^result);
-	bool getXmlValue(ProxyString &value, XmlDocument ^xml, String ^xmlName);
-	bool getXmlValue(ProxyStringMap &response, const char *respName, XmlDocument ^xml, String ^xmlName);
+	ProxyString formatTransactionId(XmlNode ^xml);
+	void parseTransactionId(const ProxyString &transactionId, EMVStreamRequest ^request);
+	bool getXmlValue(ProxyString &value, XmlDocument ^xml, const char *xmlName);
 };

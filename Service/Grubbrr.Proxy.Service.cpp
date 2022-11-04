@@ -40,10 +40,31 @@ protected:
 		return true;
 	}
 
+	virtual bool initLogging()
+	{
+		// Initialize as a service...
+		if (AfxGetSessionId() == 0)
+		{
+			if (!__super::initLogging())
+			{
+				return false;
+			}
+
+			AfxAttachLogFileSink();
+		}
+		// or as a console.
+		else if (!ConsoleApp::initApp())
+		{
+			return false;
+		}
+
+		return true;
+	}
+
 	virtual void exitApp()
 	{
-		m_api.stop();
-		m_admin.stop();
+		m_api.stop(5000);
+		m_admin.stop(5000);
 		m_model.exit();
 		ServiceApp::exitApp();
 	}

@@ -119,7 +119,7 @@ void TestCardReaderPlugin::sendVoid(Transaction &transaction)
 }
 
 
-void TestCardReaderPlugin::settlePayments(Transaction &transaction)
+void TestCardReaderPlugin::sendSettlement(Transaction &transaction)
 {
 	transaction.status = "success";
 	transaction.statusCode = "00";

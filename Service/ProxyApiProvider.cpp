@@ -28,19 +28,45 @@ bool ProxyApiProvider::initServer(RegKey &settings)
 }
 
 
-void ProxyApiProvider::validateRequestParam(const Json &apiRequest, const char *fieldName)
+Json &ProxyApiProvider::validateRequestParam(Json &apiRequest, const char *fieldName)
 {
-	if (!apiRequest.hasProperty(fieldName))
+	if (apiRequest.hasProperty(fieldName))
+	{
+		return apiRequest[fieldName];
+	}
+	else
 	{
 		throw HttpException(HttpStatus::BAD_REQUEST, "Missing %s", fieldName);
 	}
 }
 
-void ProxyApiProvider::validateSaleRequest(const Json &apiRequest)
+void ProxyApiProvider::validateSaleRequest(Json &apiRequest)
 {
 	validateRequestParam(apiRequest, "terminalId");
 	validateRequestParam(apiRequest, "orderId");
 	validateRequestParam(apiRequest, "totalAmount");
+}
+
+void ProxyApiProvider::reformatTotalAmount(ProxyCardReaderPlugin::Transaction &transaction)
+{
+	// Reformat the total-amount.
+	double totalAmount = atof(transaction.requestData["totalAmount"]);
+
+	// Apply (optional) divisor.
+	if (transaction.requestData.contains("divisor"))
+	{
+		double divisor = atof(transaction.requestData["divisor"]);
+		if (divisor)
+		{
+			totalAmount /= divisor;
+		}
+	}
+
+	// Compute actual amount. (Note that callers specify amounts in hundreds.)
+	totalAmount /= 100;
+
+	// Update the amount sent to the plugin.
+	transaction.requestData["totalAmount"] = (const char*)StringFromDouble(totalAmount, 2);
 }
 
 
@@ -48,7 +74,7 @@ Json ProxyApiProvider::execCardTransaction(
 	Json &apiRequest,
 	std::function<void(ProxyCardReaderPlugin&, ProxyCardReaderPlugin::Transaction&)> &&function)
 {
-	Json apiResponse = apiRequest;	// Start with echo of request params.
+	Json apiResponse = apiRequest;	// Echo request params in the response.
 
 	String terminalId = apiRequest["terminalId"];
 	ProxyCardReaderPlugin &cardReader = getCardReader(terminalId);

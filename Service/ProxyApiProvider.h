@@ -30,8 +30,9 @@ private:
 	ProxyTerminal &getTerminal(const String &terminalId);
 	ProxyCardReaderPlugin &getCardReader(const String &terminalId);
 
-	void validateRequestParam(const Json &apiRequest, const char *fieldName);
-	void validateSaleRequest(const Json &apiRequest);
+	Json &validateRequestParam(Json &apiRequest, const char *fieldName);
+	void validateSaleRequest(Json &apiRequest);
+	void reformatTotalAmount(ProxyCardReaderPlugin::Transaction &transaction);
 
 	Json execCardTransaction(
 		Json &apiRequest,
