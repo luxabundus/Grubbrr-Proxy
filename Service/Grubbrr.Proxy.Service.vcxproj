@@ -155,7 +155,6 @@
     </ClCompile>
     <ClCompile Include="ProxyAdminProvider.cpp" />
     <ClCompile Include="ProxyApiProvider.cpp" />
-    <ClCompile Include="ProxyApiProvider.Handlers.cpp" />
     <ClCompile Include="ProxyModel.cpp" />
     <ClCompile Include="ProxyRegKey.cpp" />
     <ClCompile Include="ProxyProvider.cpp" />

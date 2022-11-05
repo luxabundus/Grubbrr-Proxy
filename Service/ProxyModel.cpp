@@ -37,6 +37,7 @@ bool ProxyModel::init()
 
 void ProxyModel::exit()
 {
+	m_terminals.clear();
 }
 
 

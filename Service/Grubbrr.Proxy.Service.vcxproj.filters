@@ -24,9 +24,6 @@
     <ClCompile Include="pch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ProxyApiProvider.Handlers.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="ProxyModel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
