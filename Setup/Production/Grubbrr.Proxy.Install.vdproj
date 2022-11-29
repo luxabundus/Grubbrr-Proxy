@@ -27,20 +27,8 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_45C3A91B7766640C05389BBC582C0EB7"
-        "OwnerKey" = "8:_1144894F001E404CA6A8C9A147330F37"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_4B6428570F3344CF99853600DA40A077"
         "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_64092C9661C6951AF7FCFF4D53F097CA"
-        "OwnerKey" = "8:_1144894F001E404CA6A8C9A147330F37"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -51,20 +39,8 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_6E3215F450A5696B61F9493B1EBCC88E"
-        "OwnerKey" = "8:_1144894F001E404CA6A8C9A147330F37"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_76D7A86C9E954697B468605EBDE8732F"
         "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_835D1BC9C9E8204FC60ABB7F19313DE1"
-        "OwnerKey" = "8:_1144894F001E404CA6A8C9A147330F37"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -77,18 +53,6 @@
         {
         "MsmKey" = "8:_8CBC40BA4D4543E782D10E609C0F761C"
         "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_99ACE0F04AEE71366EF3DB0063D18CB3"
-        "OwnerKey" = "8:_1144894F001E404CA6A8C9A147330F37"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_A66C1567CC5E07651C1F97D855965C39"
-        "OwnerKey" = "8:_1144894F001E404CA6A8C9A147330F37"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -119,12 +83,6 @@
         {
         "MsmKey" = "8:_D9F7DAB1007541CEA73ED533674E57A7"
         "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_DD5ACB695F0D8A55C1C605670F82661A"
-        "OwnerKey" = "8:_1144894F001E404CA6A8C9A147330F37"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -269,26 +227,6 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_45C3A91B7766640C05389BBC582C0EB7"
-            {
-            "SourcePath" = "8:VERSION.dll"
-            "TargetName" = "8:VERSION.dll"
-            "Tag" = "8:"
-            "Folder" = "8:_DC52DA418FCE474FB735ED2C2E97523B"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:TRUE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_4B6428570F3344CF99853600DA40A077"
             {
             "SourcePath" = "8:..\\..\\Plugins\\BAC\\Runtime\\CSP.EMV.InteropEXE.exe"
@@ -309,46 +247,6 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_64092C9661C6951AF7FCFF4D53F097CA"
-            {
-            "SourcePath" = "8:OLEACC.dll"
-            "TargetName" = "8:OLEACC.dll"
-            "Tag" = "8:"
-            "Folder" = "8:_DC52DA418FCE474FB735ED2C2E97523B"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:TRUE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_6E3215F450A5696B61F9493B1EBCC88E"
-            {
-            "SourcePath" = "8:Secur32.dll"
-            "TargetName" = "8:Secur32.dll"
-            "Tag" = "8:"
-            "Folder" = "8:_DC52DA418FCE474FB735ED2C2E97523B"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:TRUE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_76D7A86C9E954697B468605EBDE8732F"
             {
             "SourcePath" = "8:..\\..\\Plugins\\BAC\\Runtime\\LocalConfiguration\\apiParam.dat"
@@ -367,26 +265,6 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_835D1BC9C9E8204FC60ABB7F19313DE1"
-            {
-            "SourcePath" = "8:CRYPT32.dll"
-            "TargetName" = "8:CRYPT32.dll"
-            "Tag" = "8:"
-            "Folder" = "8:_DC52DA418FCE474FB735ED2C2E97523B"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:TRUE"
-            "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_8A3A73BC14AC4338A2AF1226EC87A870"
@@ -427,46 +305,6 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_99ACE0F04AEE71366EF3DB0063D18CB3"
-            {
-            "SourcePath" = "8:MSWSOCK.dll"
-            "TargetName" = "8:MSWSOCK.dll"
-            "Tag" = "8:"
-            "Folder" = "8:_DC52DA418FCE474FB735ED2C2E97523B"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:TRUE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_A66C1567CC5E07651C1F97D855965C39"
-            {
-            "SourcePath" = "8:DNSAPI.dll"
-            "TargetName" = "8:DNSAPI.dll"
-            "Tag" = "8:"
-            "Folder" = "8:_DC52DA418FCE474FB735ED2C2E97523B"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:TRUE"
-            "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_A981A1EA70544CB3A0CF3DD255C45DA9"
@@ -549,26 +387,6 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_DD5ACB695F0D8A55C1C605670F82661A"
-            {
-            "SourcePath" = "8:RPCRT4.dll"
-            "TargetName" = "8:RPCRT4.dll"
-            "Tag" = "8:"
-            "Folder" = "8:_DC52DA418FCE474FB735ED2C2E97523B"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:TRUE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
         }
         "FileType"
         {
@@ -636,15 +454,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Grubbrr Proxy Service"
-        "ProductCode" = "8:{11398A4B-2499-4B66-8061-C475EAD9BEFB}"
-        "PackageCode" = "8:{C0E5441A-218F-4844-8763-60587016670B}"
+        "ProductCode" = "8:{DEB60C33-FAFE-4107-905F-ADFAC820EBCA}"
+        "PackageCode" = "8:{B566F9CE-C210-4A3B-84D4-4FC0A4F8B912}"
         "UpgradeCode" = "8:{C70B8276-A636-4F84-915B-8CCD591357E8}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
-        "ProductVersion" = "8:0.1.0"
+        "ProductVersion" = "8:0.1.1"
         "Manufacturer" = "8:Grubbrr"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"

@@ -184,7 +184,8 @@ void ProxyApiProvider::onCardRefund(HttpServerContext &context)
 
 	Json apiResponse = execCardTransaction(
 		apiRequest,
-		[](ProxyCardReaderPlugin &cardReader, ProxyCardReaderPlugin::Transaction &transaction) {
+		[this](ProxyCardReaderPlugin &cardReader, ProxyCardReaderPlugin::Transaction &transaction) {
+			reformatTotalAmount(transaction);
 			cardReader.sendRefund(transaction);
 		}
 	);
