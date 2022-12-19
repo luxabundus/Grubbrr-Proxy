@@ -8,12 +8,12 @@
 				<StartName>$(AccountName)</StartName>
 -->
 				<Description></Description>
-<!--
 				<Recovery>
 					<First Action="restart"/>
+<!--
 					<Second Action="restart"/>
-				</Recovery>
 -->
+				</Recovery>
 			</Service>
 			<RemoveFile>
 				<Directory>[TARGETDIR]</Directory>

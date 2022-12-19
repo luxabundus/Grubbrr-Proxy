@@ -115,10 +115,6 @@ void BacCardReaderPlugin::sendVoid(Transaction &transaction)
 	{
 		transaction.resultData["transactionId"] = formatTransactionId(result);
 	}
-	else
-	{
-		reverse(transaction);
-	}
 
 	transaction.resultData["raw"] = _prxstr(result->OuterXml);
 }
