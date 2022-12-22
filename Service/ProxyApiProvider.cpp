@@ -57,17 +57,13 @@ void ProxyApiProvider::reformatTotalAmount(ProxyCardReaderPlugin::Transaction &t
 	double totalAmount = StringToDouble(transaction.requestData["totalAmount"]);
 
 	// Apply (optional) divisor.
+	double divisor = 0;
 	if (transaction.requestData.contains("divisor"))
 	{
-		double divisor = StringToDouble(transaction.requestData["divisor"]);
-		if (divisor)
-		{
-			totalAmount /= divisor;
-		}
+		divisor = StringToDouble(transaction.requestData["divisor"]);
 	}
 
-	// Compute actual amount. (Note that callers specify amounts in hundreds.)
-	totalAmount /= 100;
+	totalAmount /= divisor ? divisor : 100;
 
 	// Update the amount sent to the plugin.
 	transaction.requestData["totalAmount"] = (const char*)StringFromDouble(totalAmount, 2);
