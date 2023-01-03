@@ -24,6 +24,12 @@ bool ProxyApiProvider::initServer(RegKey &settings)
 		return false;
 	}
 
+	if (!settings.getInt32Value("DisableCORS"))
+	{
+		enableCors(86400);
+		enableCorsCredentials();
+	}
+
 	String listener = settings.getStringValue("Listener");
 	if (listener.isEmpty())
 	{
